@@ -7,6 +7,7 @@
             <ui:Button text="Save" display-tooltip-when-elided="true" name="save-button" style="height: 30px;" />
             <ui:Label text="[Level name] Editor" display-tooltip-when-elided="true" style="flex-grow: 1; font-size: 14px; -unity-font-style: bold; -unity-text-align: middle-left; white-space: normal;" />
         </ui:VisualElement>
+        <ui:Button text="Test" display-tooltip-when-elided="true" name="test-level-button" style="margin-top: 0; margin-bottom: 15px; background-color: rgba(60, 137, 97, 255); height: 30px;" />
         <ui:ScrollView horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Auto">
             <ui:VisualElement name="castle-config" class="container">
                 <ui:Label text="Castle Configuration" display-tooltip-when-elided="true" class="container-title" />

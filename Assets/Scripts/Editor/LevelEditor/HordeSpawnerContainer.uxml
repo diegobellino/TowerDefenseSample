@@ -4,6 +4,6 @@
         <ui:Label text="[Id]" display-tooltip-when-elided="true" name="horde-spawner-id" class="container-title" />
         <ui:VisualElement name="horde-spawner-position-field" />
         <ui:VisualElement name="horde-spawner-config-field" />
-        <ui:Button text="Remove" display-tooltip-when-elided="true" name="remove-spawner-button" enable-rich-text="true" style="margin-top: 10px;" />
+        <ui:Button text="Remove" display-tooltip-when-elided="true" name="remove-spawner-button" enable-rich-text="true" style="margin-top: 10px; background-color: rgba(130, 58, 58, 255);" />
     </ui:VisualElement>
 </ui:UXML>
