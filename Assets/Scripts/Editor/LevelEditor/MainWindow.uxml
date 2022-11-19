@@ -1,8 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/Scripts/Editor/Level%20Editor/LevelEditorWindow.uss?fileID=7433441132597879392&amp;guid=757000465009a4d0b898cf76e781bb57&amp;type=3#LevelEditorWindow" />
+    <Style src="project://database/Assets/Scripts/Editor/LevelEditor/Main.uss?fileID=7433441132597879392&amp;guid=757000465009a4d0b898cf76e781bb57&amp;type=3#Main" />
     <ui:VisualElement name="main-view">
         <ui:VisualElement name="main-panel" class="panel">
-            <ui:Label text="Select Config Type" display-tooltip-when-elided="true" style="-unity-font-style: bold; font-size: 14px; margin-bottom: 15px;" />
+            <ui:Label text="Select Config Type" display-tooltip-when-elided="true" class="panel-title" />
             <ui:VisualElement name="container" class="container">
                 <ui:RadioButtonGroup value="-1" name="config-button-group" class="button-group">
                     <ui:RadioButton label="New Level" value="true" name="new-level-button" />
@@ -12,17 +12,17 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="new-level-panel" class="panel">
-            <ui:Label text="New Level Config" display-tooltip-when-elided="true" style="-unity-font-style: bold; font-size: 14px; margin-bottom: 15px;" />
+            <ui:Label text="New Level Config" display-tooltip-when-elided="true" class="panel-title" />
             <ui:TextField picking-mode="Ignore" label="Name" value="filler text" name="level-name-field" style="padding-bottom: 10px;" />
             <ui:VisualElement name="container" class="container">
-                <ui:Foldout text="Level type" style="font-size: 12px; -unity-font-style: normal;">
-                    <ui:RadioButtonGroup value="-1" class="button-group" style="flex-direction: column;">
-                        <ui:RadioButton label="Time Limit" value="true" />
-                        <ui:VisualElement name="divider" class="divider" />
-                        <ui:RadioButton label="Wave Limit" />
-                    </ui:RadioButtonGroup>
-                </ui:Foldout>
+                <ui:Label text="Goal Type" display-tooltip-when-elided="true" class="container-title" />
+                <ui:RadioButtonGroup value="-1" class="button-group" style="flex-direction: column; margin-left: 15px;">
+                    <ui:RadioButton label="Time Limit" value="true" />
+                    <ui:VisualElement name="divider" class="divider" />
+                    <ui:RadioButton label="Wave Limit" />
+                </ui:RadioButtonGroup>
             </ui:VisualElement>
+            <ui:VisualElement name="level-size-field" style="margin-bottom: 10px;" />
             <ui:Button text="Generate level" display-tooltip-when-elided="true" name="create-level-button" />
         </ui:VisualElement>
         <ui:VisualElement name="load-level-panel" class="panel hide" style="margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px; padding-left: 15px; padding-right: 15px; padding-top: 15px; padding-bottom: 15px; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; background-color: rgb(58, 55, 55); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; border-left-color: rgb(176, 168, 168); border-right-color: rgb(176, 168, 168); border-top-color: rgb(176, 168, 168); border-bottom-color: rgb(176, 168, 168); flex-direction: column;">

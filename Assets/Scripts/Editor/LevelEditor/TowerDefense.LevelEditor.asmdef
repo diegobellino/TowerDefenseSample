@@ -1,13 +1,16 @@
 {
     "name": "TowerDefense.LevelEditor",
-    "rootNamespace": "",
+    "rootNamespace": "TowerDefense.Editor.LevelEditor",
     "references": [
-        "GUID:5e7d727614452432d8d4410025f643dd"
+        "GUID:5e7d727614452432d8d4410025f643dd",
+        "GUID:cf4ac602c3b936544bc318b8defbccc7"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": false,
+    "overrideReferences": true,
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],

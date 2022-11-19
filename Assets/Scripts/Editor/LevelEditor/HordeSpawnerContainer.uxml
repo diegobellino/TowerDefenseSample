@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scripts/Editor/LevelEditor/Main.uss?fileID=7433441132597879392&amp;guid=757000465009a4d0b898cf76e781bb57&amp;type=3#Main" />
+    <ui:VisualElement name="horde-spawner-container" class="container">
+        <ui:Label text="[Id]" display-tooltip-when-elided="true" name="horde-spawner-id" class="container-title" />
+        <ui:VisualElement name="horde-spawner-position-field" />
+        <ui:VisualElement name="horde-spawner-config-field" />
+        <ui:Button text="Remove" display-tooltip-when-elided="true" name="remove-spawner-button" enable-rich-text="true" style="margin-top: 10px;" />
+    </ui:VisualElement>
+</ui:UXML>
