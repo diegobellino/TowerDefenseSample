@@ -26,6 +26,8 @@ namespace TowerDefense.Editor.LevelEditor
         private VisualTreeAsset hordeSpawnerContainer;
 
         private Scene levelEditorScene;
+        private LevelConfig selectedLevelConfig;
+        private string levelPath;
         
         private int spawnersCount;
         
@@ -110,11 +112,34 @@ namespace TowerDefense.Editor.LevelEditor
         
         private void OnCreateLevel()
         {
+            var levelName = mainElement.Q<TextField>("level-name-field").value;
+            if (levelName.Equals("filler text"))
+            {
+                return;
+            }
+            
+            levelPath = EditorUtility.SaveFolderPanel("Save level asset to path", "", "");
+            if (string.IsNullOrEmpty(levelPath))
+            {
+                return;
+            }
+            
+            levelPath = "Assets" + levelPath.Split("/Assets").Last();
+            levelPath += $"/{levelName}.asset";
+            
+            var levelConfig = ScriptableObject.CreateInstance<LevelConfig>();
+            levelConfig.name = levelName;
+            
+            AssetDatabase.CreateAsset(levelConfig, levelPath);
+            selectedLevelConfig = AssetDatabase.LoadAssetAtPath<LevelConfig>(levelPath);
+            
             OpenLevelEditor();
         }
         
         private void OnLoadLevel()
         {
+            var objectField = mainElement.Q("load-level-asset-field").Children().First() as ObjectField;
+            selectedLevelConfig = objectField?.value as LevelConfig;
             OpenLevelEditor();
         }
 
@@ -140,10 +165,12 @@ namespace TowerDefense.Editor.LevelEditor
                 AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Scripts/Editor/LevelEditor/LevelEditor.uxml");
             
             mainElement = visualTree.Instantiate();
-            
+
+            mainElement.Q<Label>("level-editor-title").text = $"<color=green>{selectedLevelConfig.name}</color> Editor";
             mainElement.Q("castle-health-field").Add(new IntegerField("Health"));
             mainElement.Q("castle-position-field").Add(new Vector2Field("Position"));
             mainElement.Q<Button>("add-spawner-button").clicked += AddSpawnerContainer;
+            mainElement.Q<Button>("save-button").clicked += SaveLevel;
 
             mainElement.Q<Button>("exit-button").clicked += OnExitLevelEditor;
         }
@@ -159,6 +186,11 @@ namespace TowerDefense.Editor.LevelEditor
             
             selectedViewType = ViewType.Main;
             CreateGUI();
+        }
+
+        private void SaveLevel()
+        {
+            
         }
 
         private void AddSpawnerContainer()

@@ -25,11 +25,10 @@
             <ui:VisualElement name="level-size-field" style="margin-bottom: 10px;" />
             <ui:Button text="Generate level" display-tooltip-when-elided="true" name="create-level-button" />
         </ui:VisualElement>
-        <ui:VisualElement name="load-level-panel" class="panel hide" style="margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px; padding-left: 15px; padding-right: 15px; padding-top: 15px; padding-bottom: 15px; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; background-color: rgb(58, 55, 55); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; border-left-color: rgb(176, 168, 168); border-right-color: rgb(176, 168, 168); border-top-color: rgb(176, 168, 168); border-bottom-color: rgb(176, 168, 168); flex-direction: column;">
+        <ui:VisualElement name="load-level-panel" class="panel hide">
             <ui:Label text="Load Level Config" display-tooltip-when-elided="true" style="-unity-font-style: bold; font-size: 14px; margin-bottom: 15px;" />
             <ui:VisualElement name="load-level-asset-field" style="margin-bottom: 10px;" />
             <ui:Button text="Load level" display-tooltip-when-elided="true" name="load-level-button" />
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="level-view" class="hide" />
 </ui:UXML>
