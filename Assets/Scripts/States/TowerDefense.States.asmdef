@@ -1,0 +1,17 @@
+{
+    "name": "TowerDefense.States",
+    "references": [
+        "GUID:1f6173867584f824ebabb5b02b42f6f9",
+        "GUID:5966a23a3aaa2234ab7c621690738ccb",
+        "GUID:cf4ac602c3b936544bc318b8defbccc7"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

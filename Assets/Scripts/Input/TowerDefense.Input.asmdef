@@ -1,0 +1,18 @@
+{
+    "name": "TowerDefense.Input",
+    "references": [
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:5966a23a3aaa2234ab7c621690738ccb",
+        "GUID:1f6173867584f824ebabb5b02b42f6f9",
+        "GUID:04fc079954280a64998d08b0b64186de"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

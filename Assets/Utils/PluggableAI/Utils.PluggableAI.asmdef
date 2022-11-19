@@ -1,0 +1,15 @@
+{
+    "name": "Utils.PluggableAI",
+    "references": [
+        "GUID:5966a23a3aaa2234ab7c621690738ccb"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af462c24d17874e4d861d47ce5b00767, type: 3}
+  m_Name: BaseTower_TargetEnemyState
+  m_EditorClassIdentifier: 
+  GizmoColor: {r: 1, g: 0.6878681, b: 0.07075471, a: 1}
+  actions:
+  - {fileID: 11400000, guid: 7d391a100ecc3c84c9d572787c1d84dd, type: 2}
+  transitions:
+  - decision: {fileID: 11400000, guid: ca63e30e65002ca4783b898704a287bc, type: 2}
+    trueState: {fileID: 11400000, guid: f731bb4131ea6344186b098f0db5606b, type: 2}
+    falseState: {fileID: 11400000, guid: e70e5c5e4b963c14b802228acb6ec688, type: 2}

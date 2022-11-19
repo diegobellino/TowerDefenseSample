@@ -1,0 +1,21 @@
+{
+    "name": "TowerDefense.Towers",
+    "references": [
+        "GUID:5966a23a3aaa2234ab7c621690738ccb",
+        "GUID:813af9c3914c58d4abf3457475cbf031",
+        "GUID:1f6173867584f824ebabb5b02b42f6f9",
+        "GUID:04fc079954280a64998d08b0b64186de",
+        "GUID:de8b9d9519eaf86469d8b8fb3c54c16e",
+        "GUID:e0b44b89396115b4ba2d3b2cb76e208f",
+        "GUID:35c9459b11e93c94882788d40b9183ef"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
