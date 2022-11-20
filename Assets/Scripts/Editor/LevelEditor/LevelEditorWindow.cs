@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using TowerDefense.GameLogic.Runtime.Configs;
 using UnityEditor;
@@ -92,8 +93,8 @@ namespace TowerDefense.Editor.LevelEditor
                 objectType = typeof(LevelConfig)
             });
 
-            mainElement.Q<Button>("create-level-button").clicked += OnCreateLevel;
-            mainElement.Q<Button>("load-level-button").clicked += OnLoadLevel;
+            mainElement.Q<Button>("create-level-button").clicked += OnCreateLevelButton;
+            mainElement.Q<Button>("load-level-button").clicked += OnLoadLevelButton;
         }
 
         private void OnMainViewGUI()
@@ -110,10 +111,16 @@ namespace TowerDefense.Editor.LevelEditor
             }
         }
         
-        private void OnCreateLevel()
+        private void OnCreateLevelButton()
         {
             var levelName = mainElement.Q<TextField>("level-name-field").value;
             if (levelName.Equals("filler text"))
+            {
+                return;
+            }
+
+            var mapSize = mainElement.Q("level-size-field").Children().First() as Vector2Field;
+            if (mapSize.value.magnitude <= 0)
             {
                 return;
             }
@@ -131,16 +138,20 @@ namespace TowerDefense.Editor.LevelEditor
             levelConfig.name = levelName;
             
             AssetDatabase.CreateAsset(levelConfig, levelPath);
+            
             selectedLevelConfig = AssetDatabase.LoadAssetAtPath<LevelConfig>(levelPath);
+            selectedLevelConfig.mapSize = mapSize.value;
             
             OpenLevelEditor();
         }
         
-        private void OnLoadLevel()
+        private void OnLoadLevelButton()
         {
             var objectField = mainElement.Q("load-level-asset-field").Children().First() as ObjectField;
             selectedLevelConfig = objectField?.value as LevelConfig;
+            
             OpenLevelEditor();
+            LoadLevel();
         }
 
         private void OpenLevelEditor()
@@ -188,12 +199,58 @@ namespace TowerDefense.Editor.LevelEditor
             CreateGUI();
         }
 
+        private void LoadLevel()
+        {
+            spawnersCount = 0;
+            
+            var castleHealthField = mainElement.Q("castle-health-field").Children().First() as IntegerField;
+            var castlePositionField = mainElement.Q("castle-position-field").Children().First() as Vector2Field;
+
+            if (selectedLevelConfig == null ||
+                selectedLevelConfig.hordeSpawnerLocations.Length != selectedLevelConfig.hordeConfigs.Length)
+            {
+                return;
+            }
+            
+            castleHealthField.value = selectedLevelConfig.castleHealth;
+            castlePositionField.value = selectedLevelConfig.castlePosition;
+
+            for (int i = 0; i < selectedLevelConfig.hordeConfigs.Length; i++)
+            {
+                AddSpawnerContainer(selectedLevelConfig.hordeConfigs[i], selectedLevelConfig.hordeSpawnerLocations[i]);
+            }
+        }
+
         private void SaveLevel()
         {
+            var health = mainElement.Q("castle-health-field").Children().First() as IntegerField;
+            var castlePosition = mainElement.Q("castle-position-field").Children().First() as Vector2Field;
+            var hordeConfigs = new List<HordeConfig>();
+            var hordeSpawnerLocations = new List<Vector2>();
             
+            foreach (var spawner in mainElement.Q("horde-spawners").Children())
+            {
+                var locationField = spawner.Q("horde-spawner-position-field").Children().First() as Vector2Field;
+                var configField = spawner.Q("horde-spawner-config-field").Children().First() as ObjectField;
+                
+                hordeConfigs.Add(configField.value as HordeConfig);
+                hordeSpawnerLocations.Add(locationField.value);
+            }
+            
+            selectedLevelConfig.castleHealth = health.value;
+            selectedLevelConfig.castlePosition = castlePosition.value;
+            selectedLevelConfig.hordeConfigs = hordeConfigs.ToArray();
+            selectedLevelConfig.hordeSpawnerLocations = hordeSpawnerLocations.ToArray();
+            
+            Debug.Log($"Level {selectedLevelConfig.name} saved!");
         }
 
         private void AddSpawnerContainer()
+        {
+            AddSpawnerContainer(null, null);
+        }
+        
+        private void AddSpawnerContainer(HordeConfig config, Vector2? spawnerPosition)
         {
             spawnersCount++;
             
@@ -202,11 +259,23 @@ namespace TowerDefense.Editor.LevelEditor
 
             var id = $"Spawner {spawnersCount}";
             newSpawnerContainer.Q<Label>("horde-spawner-id").text = id;
-            newSpawnerContainer.Q("horde-spawner-position-field").Add(new Vector2Field("Position"));
-            newSpawnerContainer.Q("horde-spawner-config-field").Add(new ObjectField("Config")
+
+            var positionField = new Vector2Field("Position");
+            if (spawnerPosition != null)
             {
+                positionField.value = spawnerPosition.Value;
+            }
+            newSpawnerContainer.Q("horde-spawner-position-field").Add(positionField);
+
+            var configField = new ObjectField("Config"){
                 objectType = typeof(HordeConfig)
-            });
+            };
+            if (config != null)
+            {
+                configField.value = config;
+            }
+            newSpawnerContainer.Q("horde-spawner-config-field").Add(configField);
+            
             newSpawnerContainer.Q<Button>("remove-spawner-button").clicked += () =>
             {
                 RemoveSpawnerContainer(id);

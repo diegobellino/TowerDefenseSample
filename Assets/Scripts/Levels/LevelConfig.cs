@@ -1,3 +1,4 @@
+using TowerDefense.GameLogic.Runtime.Configs;
 using UnityEngine;
 
 namespace TowerDefense.Levels
@@ -6,11 +7,12 @@ namespace TowerDefense.Levels
     [CreateAssetMenu(fileName = "New level config", menuName = "Tower Defense/Levels/New Level")]
     public class LevelConfig : ScriptableObject
     {
-        private Vector2 mapSize;
-        private Vector2[] hordeSpawnerLocations;
-        private Vector2 castleLocation;
-
-        public Vector2 MapSize => mapSize;
-
+        public Vector2 mapSize;
+        
+        public Vector2 castlePosition;
+        public int castleHealth;
+        
+        public Vector2[] hordeSpawnerLocations;
+        public HordeConfig[] hordeConfigs;
     }
 }

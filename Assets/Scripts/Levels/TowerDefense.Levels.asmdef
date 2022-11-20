@@ -1,3 +1,16 @@
 {
-	"name": "TowerDefense.Levels"
+    "name": "TowerDefense.Levels",
+    "rootNamespace": "TowerDefense.Levels",
+    "references": [
+        "GUID:cf4ac602c3b936544bc318b8defbccc7"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
