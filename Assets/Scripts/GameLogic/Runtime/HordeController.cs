@@ -14,7 +14,6 @@ namespace TowerDefense.GameLogic.Runtime
         public int HordeCount => hordes.Length;
         public int DefeatedHordes => defeatedHordes.Count;
 
-        [SerializeField] private PathConfig path;
         [SerializeField] private Transform SpawnPoint;
         [SerializeField] private HordeConfig[] hordes;
         [SerializeField] private ObjectPool pool;
@@ -55,7 +54,6 @@ namespace TowerDefense.GameLogic.Runtime
                         enemyObject.transform.rotation = SpawnPoint.rotation;
 
                         var enemy = enemyObject.GetComponent<IEnemy>();
-                        enemy.pathWaypoints = path.Waypoints;
                         enemy.ResetValues();
                         enemy.shouldMove = true;
 
@@ -126,20 +124,5 @@ namespace TowerDefense.GameLogic.Runtime
             return spawnedHordes.Count == hordes.Length && 
                 defeatedHordes.Count == hordes.Length;
         }
-
-        #region GIZMOS
-
-#if UNITY_EDITOR
-
-
-        private void OnDrawGizmos()
-        {
-            path?.DebugDraw();
-        }
-
-#endif
-
-        #endregion
-
     }
 }
