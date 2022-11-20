@@ -11,16 +11,18 @@ namespace TowerDefense.Hordes
     public class HordeController : MonoBehaviour, IHordeController
     {
         #region VARIABLES
-
-        public int HordeCount => hordeConfig.GetEnemyCount();
+        
         [SerializeField] private Transform spawnPoint;
-        [SerializeField] HordeConfig hordeConfig;
-        [SerializeField] private TowerDefense.ObjectPool.ObjectPool pool;
+        [SerializeField] private LineRenderer pathRenderer;
 
+        private HordeConfig hordeConfig;
+        private TowerDefense.ObjectPool.ObjectPool pool;
         private Queue<ISpawnBehaviour> spawnBehaviours;
         private ISpawnBehaviour currentBehaviour;
         private Dictionary<HordeConfig, List<IEnemy>> enemiesByHorde = new();
         private float timeSinceLastSpawned;
+        
+        public int HordeCount => hordeConfig.GetEnemyCount();
 
         #endregion
 
@@ -48,6 +50,20 @@ namespace TowerDefense.Hordes
         }
 
         #endregion
+
+        public void Initialize(HordeConfig config)
+        {
+            hordeConfig = config;
+        }
+
+        public void UpdatePath(Vector3 startPosition, Vector3 endPosition)
+        {
+            pathRenderer.positionCount = 3;
+            
+            pathRenderer.SetPosition(0, startPosition);
+            pathRenderer.SetPosition(1, new Vector3(endPosition.x, startPosition.y, startPosition.z));
+            pathRenderer.SetPosition(2, endPosition);
+        }
 
         public void SpawnEnemy(EnemyType type)
         {

@@ -1,3 +1,4 @@
+using System.Buffers;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using TowerDefense.Hordes;
@@ -11,7 +12,8 @@ namespace TowerDefense.Levels.LevelEditor
     public class LevelEditorController : MonoBehaviour
     {
          
-        private readonly Dictionary<int, GameObject> spawnerObjects = new();
+        private readonly Dictionary<int, HordeController> spawnerObjects = new();
+        private readonly Dictionary<int, Vector3> spawnerPositions = new();
 
         [SerializeField] private GameObject spawnerPrefab;
         [SerializeField] private GameObject castlePrefab;
@@ -34,7 +36,13 @@ namespace TowerDefense.Levels.LevelEditor
 
             // This script is only for editor purposes, so some bad practices like this are allowed
             castleObject = Instantiate(castlePrefab, transform);
-            castleObject.transform.position = new Vector3(position.x, 0, position.y);
+            var newPosition = new Vector3(position.x, 0, position.y);
+            castleObject.transform.position = newPosition;
+            
+            foreach (var spawnerId in spawnerObjects.Keys)
+            {
+                spawnerObjects[spawnerId].UpdatePath(spawnerPositions[spawnerId], newPosition);
+            }
         }
 
         public void ChangeCastleHealth(int health)
@@ -45,16 +53,31 @@ namespace TowerDefense.Levels.LevelEditor
         public void RepositionCastle(Vector2Int position)
         {
             Debug.Log($"Reposition castle to {position}");
-            
-            castleObject.transform.position = new Vector3(position.x, 0, position.y);
+
+            var newPosition = new Vector3(position.x, 0, position.y);
+            castleObject.transform.position = newPosition;
+
+            foreach (var spawnerId in spawnerObjects.Keys)
+            {
+                spawnerObjects[spawnerId].UpdatePath(spawnerPositions[spawnerId], newPosition);
+            }
         }
 
         public void CreateSpawner(int spawnerId, Vector2Int position, [CanBeNull] HordeConfig config)
         {
             Debug.Log($"Create spawner {spawnerId} at {position} with config {config?.name}");
+            var newPosition = new Vector3(position.x, 0, position.y);
+            spawnerPositions[spawnerId] = newPosition;
+            
+            spawnerObjects[spawnerId] = Instantiate(spawnerPrefab, transform).GetComponent<HordeController>();
+            spawnerObjects[spawnerId].transform.position = newPosition;
 
-            spawnerObjects[spawnerId] = Instantiate(spawnerPrefab, transform);
-            spawnerObjects[spawnerId].transform.position = new Vector3(position.x, 0, position.y);
+            spawnerObjects[spawnerId].UpdatePath(newPosition, castleObject.transform.position);
+
+            if (config != null)
+            {
+                spawnerObjects[spawnerId].Initialize(config);
+            }
         }
 
         public void DestroySpawner(int spawnerId)
@@ -70,13 +93,17 @@ namespace TowerDefense.Levels.LevelEditor
         public void RepositionSpawner(int spawnerId, Vector2Int position)
         {
             Debug.Log($"Reposition spawner {spawnerId} at {position}");
+            var newPosition = new Vector3(position.x, 0, position.y);
+            spawnerPositions[spawnerId] = newPosition;
 
-            spawnerObjects[spawnerId].transform.position = new Vector3(position.x, 0, position.y);
+            spawnerObjects[spawnerId].transform.position = newPosition;
+            spawnerObjects[spawnerId].UpdatePath(newPosition, castleObject.transform.position);
         }
 
         public void ChangeSpawnerConfig(int spawnerId, HordeConfig config)
         {
             Debug.Log($"Change spawner {spawnerId} config to {config.name}");
+            spawnerObjects[spawnerId].Initialize(config);
         }
     }
 }

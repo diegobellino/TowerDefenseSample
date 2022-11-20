@@ -204,7 +204,6 @@ namespace TowerDefense.Levels.LevelEditor.Editor
             mainElement.Q<Button>("exit-button").clicked += OnExitLevelEditor;
             
             LoadLevel();
-            controller.CreateCastle(castlePositionField.value, castleHealthField.value);
         }
 
         private void OnLevelEditorGUI()
@@ -236,6 +235,8 @@ namespace TowerDefense.Levels.LevelEditor.Editor
             levelSizeField.value = selectedLevelConfig.mapSize;
             castleHealthField.value = selectedLevelConfig.castleHealth;
             castlePositionField.value = selectedLevelConfig.castlePosition;
+            
+            controller.CreateCastle(castlePositionField.value, castleHealthField.value);
 
             if (selectedLevelConfig.hordeConfigs == null)
             {
