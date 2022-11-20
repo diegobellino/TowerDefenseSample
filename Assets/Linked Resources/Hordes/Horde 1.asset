@@ -12,3 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0961540fe17135944a1b1a2afaebc983, type: 3}
   m_Name: Horde 1
   m_EditorClassIdentifier: 
+  spawnBehaviours:
+  - {fileID: 11400000, guid: 61cc5813f16514018bfa49dd5f565e2b, type: 2}
+  - {fileID: 11400000, guid: b766309132f0d40d1b861abea5afd923, type: 2}
+  - {fileID: 11400000, guid: b766309132f0d40d1b861abea5afd923, type: 2}
+  - {fileID: 11400000, guid: b766309132f0d40d1b861abea5afd923, type: 2}
+  - {fileID: 11400000, guid: 8ef53de5e246d4856b7076fc618aa413, type: 2}
+  - {fileID: 11400000, guid: b766309132f0d40d1b861abea5afd923, type: 2}
+  - {fileID: 11400000, guid: abfd6425631e0476d899a9eae192a884, type: 2}
+  - {fileID: 11400000, guid: e85a974beb6fe4cf2b0c4f44214ad21a, type: 2}
+  - {fileID: 11400000, guid: b766309132f0d40d1b861abea5afd923, type: 2}
+  - {fileID: 11400000, guid: abfd6425631e0476d899a9eae192a884, type: 2}
+  - {fileID: 11400000, guid: b766309132f0d40d1b861abea5afd923, type: 2}
+  - {fileID: 11400000, guid: abfd6425631e0476d899a9eae192a884, type: 2}
+  - {fileID: 11400000, guid: 8ef53de5e246d4856b7076fc618aa413, type: 2}
+  - {fileID: 11400000, guid: de6bfd372054240aea4b1eafa991f9cc, type: 2}

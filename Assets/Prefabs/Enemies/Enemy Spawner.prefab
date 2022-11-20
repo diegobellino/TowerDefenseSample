@@ -130,7 +130,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 2822419418375591874}
-  hordeConfig: {fileID: 0}
   pathRenderer: {fileID: 6029047940078045512}
 --- !u!120 &6029047940078045512
 LineRenderer:
@@ -184,8 +183,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.011817932
-        value: 0.3154335
+        time: 0.015014648
+        value: 0.1389656
         inSlope: 0
         outSlope: 0
         tangentMode: 0
