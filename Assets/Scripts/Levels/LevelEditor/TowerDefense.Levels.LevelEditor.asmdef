@@ -1,0 +1,20 @@
+{
+    "name": "TowerDefense.Levels.LevelEditor",
+    "rootNamespace": "TowerDefense.Levels.LevelEditor",
+    "references": [
+        "GUID:cf4ac602c3b936544bc318b8defbccc7"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [
+        ""
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_EDITOR"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

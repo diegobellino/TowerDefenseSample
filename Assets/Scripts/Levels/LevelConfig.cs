@@ -7,12 +7,12 @@ namespace TowerDefense.Levels
     [CreateAssetMenu(fileName = "New level config", menuName = "Tower Defense/Levels/New Level")]
     public class LevelConfig : ScriptableObject
     {
-        public Vector2 mapSize;
+        public Vector2Int mapSize;
         
-        public Vector2 castlePosition;
+        public Vector2Int castlePosition;
         public int castleHealth;
         
-        public Vector2[] hordeSpawnerLocations;
+        public Vector2Int[] hordeSpawnerLocations;
         public HordeConfig[] hordeConfigs;
     }
 }
