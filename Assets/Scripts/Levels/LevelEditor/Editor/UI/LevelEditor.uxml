@@ -9,10 +9,6 @@
         </ui:VisualElement>
         <ui:Button text="Test" display-tooltip-when-elided="true" name="test-level-button" style="margin-top: 0; margin-bottom: 15px; background-color: rgb(60, 137, 97); height: 30px;" />
         <ui:ScrollView horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Auto">
-            <ui:VisualElement name="map-config" class="container">
-                <ui:Label text="Map Configuration" display-tooltip-when-elided="true" class="container-title" />
-                <ui:VisualElement name="level-size-field" style="margin-bottom: 10px;" />
-            </ui:VisualElement>
             <ui:VisualElement name="castle-config" class="container">
                 <ui:Label text="Castle Configuration" display-tooltip-when-elided="true" class="container-title" />
                 <ui:VisualElement name="castle-health-field" style="margin-bottom: 5px;" />

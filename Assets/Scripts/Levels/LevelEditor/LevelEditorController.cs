@@ -20,11 +20,6 @@ namespace TowerDefense.Levels.LevelEditor
 
         private GameObject castleObject;
 
-        public void ResizeMap(Vector2Int size)
-        {
-            Debug.Log($"Resize map to {size}");
-        }
-
         public void CreateCastle(Vector2Int position, int health)
         {
             if (castleObject != null)
@@ -86,8 +81,9 @@ namespace TowerDefense.Levels.LevelEditor
             
             var spawner = spawnerObjects[spawnerId];
             spawnerObjects.Remove(spawnerId);
+            spawnerPositions.Remove(spawnerId);
             
-            DestroyImmediate(spawner);
+            DestroyImmediate(spawner.gameObject);
         }
 
         public void RepositionSpawner(int spawnerId, Vector2Int position)

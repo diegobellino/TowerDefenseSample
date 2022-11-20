@@ -176,15 +176,7 @@ namespace TowerDefense.Levels.LevelEditor.Editor
             mainElement = visualTree.Instantiate();
 
             mainElement.Q<Label>("level-editor-title").text = $"<color=green>{selectedLevelConfig.name}</color> Editor";
-            
-            var levelSizePanel = mainElement.Q("level-size-field");
-            var levelSizeField = new Vector2IntField("Size (Units)");
-            levelSizeField.RegisterValueChangedCallback(e =>
-            {
-                controller.ResizeMap(e.newValue);
-            });
-            levelSizePanel.Add(levelSizeField);
-            
+
             var castleHealthField = new IntegerField("Health");
             castleHealthField.RegisterValueChangedCallback(e =>
             {
@@ -223,7 +215,6 @@ namespace TowerDefense.Levels.LevelEditor.Editor
         {
             spawnersCount = 0;
             
-            var levelSizeField = mainElement.Q("level-size-field").Children().First() as Vector2IntField;
             var castleHealthField = mainElement.Q("castle-health-field").Children().First() as IntegerField;
             var castlePositionField = mainElement.Q("castle-position-field").Children().First() as Vector2IntField;
 
@@ -232,7 +223,6 @@ namespace TowerDefense.Levels.LevelEditor.Editor
                 return;
             }
 
-            levelSizeField.value = selectedLevelConfig.mapSize;
             castleHealthField.value = selectedLevelConfig.castleHealth;
             castlePositionField.value = selectedLevelConfig.castlePosition;
             
@@ -251,7 +241,6 @@ namespace TowerDefense.Levels.LevelEditor.Editor
 
         private void SaveLevel()
         {
-            var size = mainElement.Q("level-size-field").Children().First() as Vector2IntField;
             var health = mainElement.Q("castle-health-field").Children().First() as IntegerField;
             var castlePosition = mainElement.Q("castle-position-field").Children().First() as Vector2IntField;
             var hordeConfigs = new List<HordeConfig>();
@@ -266,7 +255,6 @@ namespace TowerDefense.Levels.LevelEditor.Editor
                 hordeSpawnerLocations.Add(locationField.value);
             }
 
-            selectedLevelConfig.mapSize = size.value;
             selectedLevelConfig.castleHealth = health.value;
             selectedLevelConfig.castlePosition = castlePosition.value;
             selectedLevelConfig.hordeConfigs = hordeConfigs.ToArray();
