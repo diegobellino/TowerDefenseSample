@@ -167,3 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ed7b0eb458064b2cb0ae6a9873a4b18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnerPrefab: {fileID: 4240646642684892089, guid: 743e7696aa4ba492bba2adacca24ac8e,
+    type: 3}
+  castlePrefab: {fileID: 7179194977446707141, guid: 89b2aea9c82b0497ab79ccaec55cebd9,
+    type: 3}

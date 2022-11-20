@@ -118,12 +118,6 @@ namespace TowerDefense.Levels.LevelEditor.Editor
                 return;
             }
 
-            var mapSize = mainElement.Q("level-size-field").Children().First() as Vector2IntField;
-            if (mapSize.value.magnitude <= 0)
-            {
-                return;
-            }
-            
             levelPath = EditorUtility.SaveFolderPanel("Save level asset to path", "", "");
             if (string.IsNullOrEmpty(levelPath))
             {
@@ -139,7 +133,6 @@ namespace TowerDefense.Levels.LevelEditor.Editor
             AssetDatabase.CreateAsset(levelConfig, levelPath);
             
             selectedLevelConfig = AssetDatabase.LoadAssetAtPath<LevelConfig>(levelPath);
-            selectedLevelConfig.mapSize = mapSize.value;
             
             OpenLevelEditor();
         }
@@ -231,8 +224,7 @@ namespace TowerDefense.Levels.LevelEditor.Editor
             var castleHealthField = mainElement.Q("castle-health-field").Children().First() as IntegerField;
             var castlePositionField = mainElement.Q("castle-position-field").Children().First() as Vector2IntField;
 
-            if (selectedLevelConfig == null ||
-                selectedLevelConfig.hordeSpawnerLocations.Length != selectedLevelConfig.hordeConfigs.Length)
+            if (selectedLevelConfig == null)
             {
                 return;
             }
@@ -240,6 +232,11 @@ namespace TowerDefense.Levels.LevelEditor.Editor
             levelSizeField.value = selectedLevelConfig.mapSize;
             castleHealthField.value = selectedLevelConfig.castleHealth;
             castlePositionField.value = selectedLevelConfig.castlePosition;
+
+            if (selectedLevelConfig.hordeConfigs == null)
+            {
+                return;
+            }
 
             for (int i = 0; i < selectedLevelConfig.hordeConfigs.Length; i++)
             {

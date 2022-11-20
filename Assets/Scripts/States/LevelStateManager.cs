@@ -18,16 +18,10 @@ namespace TowerDefense.States
 
         #region BASE STATE
 
-        public LevelStateManager(): base()
-        {
-
-        }
-
         public override void OnAction(GameAction action)
         {
             switch (action)
             {
-                
                 case GameAction.Gameplay_LevelUpTower:
                     if (selectedTower != null)
                     {
