@@ -28,11 +28,11 @@ namespace TowerDefense.GameLogic.Runtime
 
         #region LIFETIME
 
-        public void UpdateHordes(float elapsedTime, float deltaTime)
+        public void UpdateHordes(float deltaTime)
         {
             foreach (var horde in hordes)
             {
-                if (ShouldSpawnHorde(horde, elapsedTime))
+                if (ShouldSpawnHorde(horde))
                 {
                     if (!timeSinceLastSpawnedByHorde.TryGetValue(horde, out var timeSinceLastSpawned))
                     {
@@ -71,7 +71,8 @@ namespace TowerDefense.GameLogic.Runtime
                     {
                         spawnedHordes.Add(horde);
                         timeSinceLastSpawnedByHorde.Remove(horde);
-                    } else
+                    } 
+                    else
                     {
                         timeSinceLastSpawnedByHorde[horde] = timeSinceLastSpawned;
                     }
@@ -87,14 +88,14 @@ namespace TowerDefense.GameLogic.Runtime
 
         #endregion
 
-        private bool ShouldSpawnHorde(HordeConfig horde, float elapsedTime)
+        private bool ShouldSpawnHorde(HordeConfig horde)
         {
             if (spawnedHordes.Contains(horde))
             {
                 return false;
             }
 
-            return horde.ShouldSpawn(elapsedTime, defeatedHordes);
+            return horde.ShouldSpawn(defeatedHordes);
         }
 
         private bool ShouldMarkHordeDefeated(HordeConfig horde)
@@ -117,7 +118,7 @@ namespace TowerDefense.GameLogic.Runtime
                 }
             }
 
-            return hordeDefeated;
+            return true;
         }
 
         public bool NoHordesLeft()

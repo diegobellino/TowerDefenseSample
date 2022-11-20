@@ -13,6 +13,8 @@ namespace TowerDefense.Levels.LevelEditor.Editor
 {
     public class LevelEditorWindow : EditorWindow
     {
+        #region VARIABLES
+        
         enum ViewType
         {
             Main,
@@ -33,6 +35,8 @@ namespace TowerDefense.Levels.LevelEditor.Editor
         private int spawnersCount;
 
         private LevelEditorController controller;
+        
+        #endregion
 
         [MenuItem("TowerDefense/Open Level Editor")]
         public static void OpenWindow()
@@ -76,7 +80,7 @@ namespace TowerDefense.Levels.LevelEditor.Editor
             }
         }
         
-        #region MAIN_VIEW
+        #region MAIN VIEW
 
         private void CreateMainView()
         {
@@ -158,7 +162,7 @@ namespace TowerDefense.Levels.LevelEditor.Editor
         
         #endregion
 
-        #region LEVEL_EDITOR_VIEW
+        #region LEVEL EDITOR VIEW
 
         private void CreateLevelEditorView()
         {

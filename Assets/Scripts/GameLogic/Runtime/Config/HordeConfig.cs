@@ -9,39 +9,23 @@ namespace TowerDefense.GameLogic.Runtime.Configs
     {
         #region VARIABLES
 
-        private enum SpawnCondition
-        {
-            AfterTime,
-            AfterHordeDefeated
-        }
-
         public GameObject[] Enemies => enemies;
         public float TimeBetweenSpawns => timeBetweenSpawns;
 
-        [SerializeField] private SpawnCondition spawnCondition;
-        [SerializeField] private float timeToSpawn;
         [SerializeField] private float timeBetweenSpawns;
         [SerializeField] private HordeConfig spawnAfterDefeated;
         [SerializeField] private GameObject[] enemies;
 
         #endregion
 
-        public bool ShouldSpawn(float elapsedTime, HashSet<HordeConfig> defeatedHordes)
+        public bool ShouldSpawn(HashSet<HordeConfig> defeatedHordes)
         {
-            switch (spawnCondition)
+            foreach (var horde in defeatedHordes)
             {
-                case SpawnCondition.AfterTime:
-                    return elapsedTime >= timeToSpawn;
-
-                case SpawnCondition.AfterHordeDefeated:
-                    foreach (var horde in defeatedHordes)
-                    {
-                        if (horde == spawnAfterDefeated)
-                        {
-                            return true;
-                        }
-                    }
-                    break;
+                if (horde == spawnAfterDefeated)
+                {
+                    return true;
+                }
             }
 
             return false;

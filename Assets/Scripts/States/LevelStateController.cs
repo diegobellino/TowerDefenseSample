@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using Utils.SmartUpdate;
 using Utils.Interfaces;
-using TowerDefense.GameLogic.Runtime.Configs;
 using System.Collections.Generic;
 using TowerDefense.GameLogic.Runtime;
+using TowerDefense.Levels;
 
 namespace TowerDefense.States
 {
@@ -27,10 +27,9 @@ namespace TowerDefense.States
 
         public UpdateGroup Group => UpdateGroup.Timed;
         public float CurrentHealth => currentHealth;
-        public float MaxHealth => config.Health;
+        public float MaxHealth => config.castleHealth;
         private LevelStateManager manager => stateManager as LevelStateManager;
 
-        private float elapsedTime;
         private HashSet<IPlaceable> activePlaceables = new HashSet<IPlaceable>();
         private int totalHordeCount = 0;
         private float currentHealth;
@@ -50,15 +49,13 @@ namespace TowerDefense.States
                 totalHordeCount += hordeController.HordeCount;
             }
 
-            currentHealth = config.Health;
+            currentHealth = config.castleHealth;
         }
 
         public void SmartUpdate(float deltaTime)
         {
-            elapsedTime += deltaTime;
-
-            // Check conditions
-            if (config.CheckWin(elapsedTime, hordes))
+            // Check win condition
+            if (HasWon())
             { 
                 manager.SyncUIValues(totalHordeCount, totalHordeCount);
                 GameStateController.Instance.ChangeState(StateId.GameOver);
@@ -69,10 +66,25 @@ namespace TowerDefense.States
             foreach (var hordeController in hordes)
             {
                 defeatedHordes += hordeController.DefeatedHordes;
-                hordeController.UpdateHordes(elapsedTime, deltaTime);
+                hordeController.UpdateHordes(deltaTime);
             }
 
             manager.SyncUIValues(defeatedHordes, totalHordeCount);
+        }
+
+        private bool HasWon()
+        {
+            var won = true;
+            foreach (var hordeController in hordes)
+            {
+                won &= hordeController.NoHordesLeft();
+
+                if (!won)
+                {
+                    break;
+                }
+            }
+            return won;
         }
 
         public override void OnCloseState()
