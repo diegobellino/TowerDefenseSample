@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using TowerDefense.GameLogic.Runtime;
-using TowerDefense.GameLogic.Runtime.Configs;
+using TowerDefense.Hordes;
 using UnityEngine;
 
 namespace TowerDefense.Levels.LevelEditor

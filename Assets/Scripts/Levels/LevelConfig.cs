@@ -1,4 +1,4 @@
-using TowerDefense.GameLogic.Runtime.Configs;
+using TowerDefense.Hordes;
 using UnityEngine;
 
 namespace TowerDefense.Levels

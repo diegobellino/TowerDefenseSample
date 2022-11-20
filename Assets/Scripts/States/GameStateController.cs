@@ -1,30 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using TowerDefense.GameActions;
 
 namespace TowerDefense.States
 {
-    public enum GameAction
-    {
-        Gameplay_SpawnTower,
-        Gameplay_Select,
-        Gameplay_Unselect,
-        Gameplay_LevelUpTower,
-        Gameplay_TakeDamage
-    }
-
-    public struct BatonPassData
-    {
-        public int IntData;
-        public float FloatData;
-        public string StringData;
-        public bool BoolData;
-        public object ExtraData;
-    }
-
     /// <summary>
     /// Lives trhoughout all lifetime of the app. Controls Game States
     /// </summary>
-    public class GameStateController : MonoBehaviour
+    public class GameStateController : MonoBehaviour, IActionReceiver
     {
         #region VARIABLES
 
@@ -49,6 +32,8 @@ namespace TowerDefense.States
             
             Instance = this;
             DontDestroyOnLoad(this);
+
+            GameActionManager.RegisterActionReceiver(this);
 
             CreateStates();
         }
@@ -125,12 +110,12 @@ namespace TowerDefense.States
             currentState = newState;
         }
 
-        public void FireAction(GameAction action)
+        public void OnAction(GameAction action)
         {
             currentState?.OnAction(action);
         }
 
-        public void FireAction(GameAction action, BatonPassData data)
+        public void OnAction(GameAction action, BatonPassData data)
         {
             currentState?.OnAction(action, data);
         }

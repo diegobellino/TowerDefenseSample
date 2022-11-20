@@ -2,7 +2,7 @@
 using Utils.SmartUpdate;
 using Utils.Interfaces;
 using System.Collections.Generic;
-using TowerDefense.GameLogic.Runtime;
+using TowerDefense.Hordes;
 using TowerDefense.Levels;
 
 namespace TowerDefense.States
@@ -23,7 +23,7 @@ namespace TowerDefense.States
 
         [SerializeField] private LevelConfig config;
         [SerializeField] private HordeController[] hordes;
-        [SerializeField] private ObjectPool pool;
+        [SerializeField] private TowerDefense.ObjectPool.ObjectPool pool;
 
         public UpdateGroup Group => UpdateGroup.Timed;
         public float CurrentHealth => currentHealth;
@@ -31,8 +31,9 @@ namespace TowerDefense.States
         private LevelStateManager manager => stateManager as LevelStateManager;
 
         private HashSet<IPlaceable> activePlaceables = new HashSet<IPlaceable>();
-        private int totalHordeCount = 0;
         private float currentHealth;
+        private int totalEnemycount;
+        private int defeatedEnemyCount;
 
         #endregion
 
@@ -42,11 +43,11 @@ namespace TowerDefense.States
         {
             base.OnOpenState();
 
-            SmartUpdateController.Instance?.Register(this);
+            SmartUpdateController.Instance.Register(this);
 
             foreach(var hordeController in hordes)
             {
-                totalHordeCount += hordeController.HordeCount;
+                totalEnemycount += hordeController.HordeCount;
             }
 
             currentHealth = config.castleHealth;
@@ -57,42 +58,29 @@ namespace TowerDefense.States
             // Check win condition
             if (HasWon())
             { 
-                manager.SyncUIValues(totalHordeCount, totalHordeCount);
+                manager.SyncUIValues(totalEnemycount, totalEnemycount);
                 GameStateController.Instance.ChangeState(StateId.GameOver);
                 return;
             }
 
-            var defeatedHordes = 0;
             foreach (var hordeController in hordes)
             {
-                defeatedHordes += hordeController.DefeatedHordes;
-                hordeController.UpdateHordes(deltaTime);
+                hordeController.UpdateController(deltaTime);
             }
 
-            manager.SyncUIValues(defeatedHordes, totalHordeCount);
+            manager.SyncUIValues(defeatedEnemyCount, totalEnemycount);
         }
 
         private bool HasWon()
         {
-            var won = true;
-            foreach (var hordeController in hordes)
-            {
-                won &= hordeController.NoHordesLeft();
-
-                if (!won)
-                {
-                    break;
-                }
-            }
-            return won;
+            return totalEnemycount <= defeatedEnemyCount;
         }
 
         public override void OnCloseState()
         {
             base.OnCloseState();
 
-            SmartUpdateController.Instance?.Unregister(this);
-
+            SmartUpdateController.Instance.Unregister(this);
         }
 
         #endregion
@@ -106,6 +94,11 @@ namespace TowerDefense.States
                 GameStateController.Instance.ChangeState(StateId.GameOver);
                 return;
             }
+        }
+
+        public void OnEnemyDefeated()
+        {
+            defeatedEnemyCount++;
         }
 
         #region PLACEABLE MANAGEMENT

@@ -1,9 +1,7 @@
 {
-    "name": "TowerDefense.Levels",
-    "rootNamespace": "TowerDefense.Levels",
-    "references": [
-        "GUID:de22519c7647247ba906fde09602de2d"
-    ],
+    "name": "TowerDefense.GameActions",
+    "rootNamespace": "TowerDefense.GameActions",
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

@@ -1,4 +1,5 @@
 ﻿using Utils.Interfaces;
+using TowerDefense.GameActions;
 
 namespace TowerDefense.States
 {
@@ -33,6 +34,9 @@ namespace TowerDefense.States
                     selectedTower = null;
                     levelUIController.ShowSpawnerUI();
                     break;
+                case GameAction.Gameplay_EnemyDefeated:
+                    levelStateController.OnEnemyDefeated();
+                    break;
             }
         }
 
@@ -57,10 +61,10 @@ namespace TowerDefense.States
 
         #endregion
 
-        public void SyncUIValues(int hordesDefeated, int totalHordeCount)
+        public void SyncUIValues(int hordesDefeated, int totalCount)
         {
             var healthPercentage = levelStateController.CurrentHealth / levelStateController.MaxHealth;
-            levelUIController.UpdateUI(healthPercentage, hordesDefeated, totalHordeCount);
+            levelUIController.UpdateUI(healthPercentage, hordesDefeated, totalCount);
         }
 
         public bool TakeCurrency(int amount)

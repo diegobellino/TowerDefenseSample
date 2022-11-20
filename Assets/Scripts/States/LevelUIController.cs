@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TowerDefense.GameActions;
 
 namespace TowerDefense.States
 {
@@ -23,17 +24,17 @@ namespace TowerDefense.States
 
         public void SpawnBaseTower()
         {
-            GameStateController.Instance.FireAction(GameAction.Gameplay_SpawnTower, new BatonPassData { IntData = (int)TowerType.BaseTower });
+            GameActionManager.FireAction(GameAction.Gameplay_SpawnTower, new BatonPassData { IntData = (int)TowerType.BaseTower });
         }
 
         public void SpawnSlowTower()
         {
-            GameStateController.Instance.FireAction(GameAction.Gameplay_SpawnTower, new BatonPassData { IntData = (int)TowerType.SlowTower });
+            GameActionManager.FireAction(GameAction.Gameplay_SpawnTower, new BatonPassData { IntData = (int)TowerType.SlowTower });
         }
 
         public void LevelUpTower()
         {
-            GameStateController.Instance.FireAction(GameAction.Gameplay_LevelUpTower);
+            GameActionManager.FireAction(GameAction.Gameplay_LevelUpTower);
         }
 
         public void UpdateUI(float playerHealthPercentage, int hordesDefeated, int totalHordeCount)

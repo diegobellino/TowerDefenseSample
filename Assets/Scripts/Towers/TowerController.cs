@@ -4,8 +4,8 @@ using TowerDefense.Towers.Config;
 using Utils.SmartUpdate;
 using Utils.Interfaces;
 using TowerDefense.Input;
-using TowerDefense.States;
 using Consts = TowerDefense.Constants.Constants;
+using TowerDefense.GameActions;
 
 namespace TowerDefense.Towers
 {
@@ -206,14 +206,14 @@ namespace TowerDefense.Towers
                 ExtraData = this
             };
 
-            GameStateController.Instance.FireAction(GameAction.Gameplay_Select, actionData);
+            GameActionManager.FireAction(GameAction.Gameplay_Select, actionData);
         }
 
         public void Unselect()
         {
             hud.ShowRangeIndicator(false);
 
-            GameStateController.Instance.FireAction(GameAction.Gameplay_Unselect);
+            GameActionManager.FireAction(GameAction.Gameplay_Unselect);
         }
 
         #endregion

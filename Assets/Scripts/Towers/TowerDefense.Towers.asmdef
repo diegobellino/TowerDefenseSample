@@ -1,5 +1,6 @@
 {
     "name": "TowerDefense.Towers",
+    "rootNamespace": "",
     "references": [
         "GUID:5966a23a3aaa2234ab7c621690738ccb",
         "GUID:813af9c3914c58d4abf3457475cbf031",
@@ -7,6 +8,7 @@
         "GUID:04fc079954280a64998d08b0b64186de",
         "GUID:de8b9d9519eaf86469d8b8fb3c54c16e",
         "GUID:e0b44b89396115b4ba2d3b2cb76e208f",
+        "GUID:3aa7223444a0047da967ee4f9a9c77f4",
         "GUID:35c9459b11e93c94882788d40b9183ef"
     ],
     "includePlatforms": [],

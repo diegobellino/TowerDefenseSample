@@ -1,4 +1,7 @@
-﻿namespace TowerDefense.States
+﻿using TowerDefense.GameActions;
+
+
+namespace TowerDefense.States
 {
     public class GameOverStateManager : BaseStateManager
     {

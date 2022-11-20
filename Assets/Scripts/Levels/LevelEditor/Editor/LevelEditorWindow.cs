@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using TowerDefense.GameLogic.Runtime.Configs;
+using TowerDefense.Hordes;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;

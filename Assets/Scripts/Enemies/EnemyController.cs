@@ -2,7 +2,7 @@
 using Utils.SmartUpdate;
 using TowerDefense.Enemies.Config;
 using Utils.Interfaces;
-using TowerDefense.States;
+using TowerDefense.GameActions;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -111,7 +111,7 @@ namespace TowerDefense.Enemies
 
                 if (curWaypoint >= pathWaypoints.Length)
                 {
-                    GameStateController.Instance.FireAction(
+                    GameActionManager.FireAction(
                         GameAction.Gameplay_TakeDamage,
                         new BatonPassData
                         {
@@ -129,7 +129,7 @@ namespace TowerDefense.Enemies
                 transform.LookAt(targetPosition);
             }
 
-            var newPosition = transform.position + movementVector * currentSpeed * deltaTime;
+            var newPosition = transform.position + movementVector * (currentSpeed * deltaTime);
             transform.position = newPosition;
         }
 

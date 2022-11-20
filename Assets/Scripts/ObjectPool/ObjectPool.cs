@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utils.Interfaces;
 
-namespace TowerDefense.GameLogic.Runtime
+namespace TowerDefense.ObjectPool
 {
     public class ObjectPool : MonoBehaviour, IPool
     {

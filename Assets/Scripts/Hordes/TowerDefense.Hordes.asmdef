@@ -1,11 +1,12 @@
 {
-    "name": "TowerDefense.GameLogic.Editor",
+    "name": "TowerDefense.Hordes",
+    "rootNamespace": "TowerDefense.Hordes",
     "references": [
-        "GUID:cf4ac602c3b936544bc318b8defbccc7"
+        "GUID:1f6173867584f824ebabb5b02b42f6f9",
+        "GUID:de8b9d9519eaf86469d8b8fb3c54c16e",
+        "GUID:5542af74c9bd24686a802d260b643161"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
