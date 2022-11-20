@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 527414a4d33e08d46b1776999d71d477, type: 3}
-  m_Name: Level 1
+  m_Script: {fileID: 11500000, guid: 15e463acb1cca4713bcd324573a44dd1, type: 3}
+  m_Name: Wait 10 Seconds
   m_EditorClassIdentifier: 
-  winCondition: 1
-  timeToSurvive: 0
-  health: 100
+  amount: 5

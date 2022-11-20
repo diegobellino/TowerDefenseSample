@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using TowerDefense.Enemies;
 
@@ -11,7 +12,7 @@ namespace TowerDefense.Hordes
     {
         #region VARIABLES
 
-        public int HordeCount => hordeConfig.Enemies.Length;
+        public int HordeCount => hordeConfig.GetEnemyCount();
         [SerializeField] private Transform spawnPoint;
         [SerializeField] HordeConfig hordeConfig;
         [SerializeField] private TowerDefense.ObjectPool.ObjectPool pool;
@@ -25,6 +26,12 @@ namespace TowerDefense.Hordes
 
         #region LIFETIME
 
+        private void Awake()
+        {
+            spawnBehaviours = hordeConfig.SpawnBehaviourQueue;
+            currentBehaviour = spawnBehaviours.Dequeue();
+        }
+
         public void UpdateController(float deltaTime)
         {
             if (currentBehaviour == null)
@@ -32,7 +39,7 @@ namespace TowerDefense.Hordes
                 currentBehaviour = spawnBehaviours.Dequeue();
             }
             
-            currentBehaviour.Update(deltaTime, this);
+            currentBehaviour.UpdateBehaviour(deltaTime, this);
 
             if (currentBehaviour.IsDone())
             {

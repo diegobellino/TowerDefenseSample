@@ -10,13 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0961540fe17135944a1b1a2afaebc983, type: 3}
-  m_Name: Horde 2 - 1
+  m_Name: Horde 1
   m_EditorClassIdentifier: 
-  spawnCondition: 0
-  timeToSpawn: 3
-  timeBetweenSpawns: 2
-  spawnAfterDefeated: {fileID: 0}
-  enemies:
-  - {fileID: 7082970822763159947, guid: 4d11fc539c6fbe4479fdc2b50a1b8f62, type: 3}
-  - {fileID: 7082970822763159947, guid: 4d11fc539c6fbe4479fdc2b50a1b8f62, type: 3}
-  - {fileID: 7082970822763159947, guid: 4d11fc539c6fbe4479fdc2b50a1b8f62, type: 3}

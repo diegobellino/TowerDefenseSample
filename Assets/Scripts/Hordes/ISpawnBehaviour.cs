@@ -6,7 +6,7 @@ namespace TowerDefense.Hordes
 {
     public interface ISpawnBehaviour
     {
-        void Update(float deltaTime, IHordeController hordeController);
+        void UpdateBehaviour(float deltaTime, IHordeController hordeController);
         bool IsDone();
     }
 }
