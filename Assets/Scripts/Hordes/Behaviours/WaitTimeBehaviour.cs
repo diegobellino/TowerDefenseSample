@@ -13,7 +13,6 @@ namespace TowerDefense.Hordes
         public override void UpdateBehaviour(float deltaTime, IHordeController hordeController)
         {
             elapsedTime = deltaTime;
-            Debug.Log($"Been waiting for {elapsedTime}...");
         }
 
         public override bool IsDone()

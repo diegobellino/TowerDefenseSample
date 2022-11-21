@@ -117,6 +117,8 @@ namespace TowerDefense.Enemies
                         {
                             FloatData = enemyConfig.Damage
                         });
+                    GameActionManager.FireAction(GameAction.Gameplay_EnemyDefeated);
+                    
                     shouldMove = false;
 
                     Pool.PoolObject(gameObject, PoolId);
@@ -148,6 +150,7 @@ namespace TowerDefense.Enemies
 
             if (Health <= 0)
             {
+                GameActionManager.FireAction(GameAction.Gameplay_EnemyDefeated);
                 Pool.PoolObject(gameObject, PoolId);
                 return;
             }
