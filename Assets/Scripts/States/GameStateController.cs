@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using TowerDefense.GameActions;
+using TowerDefense.Levels;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace TowerDefense.States
 {
     /// <summary>
-    /// Lives trhoughout all lifetime of the app. Controls Game States
+    /// Lives throughout all lifetime of the app. Controls Game States
     /// </summary>
     public class GameStateController : MonoBehaviour, IActionReceiver
     {
@@ -16,8 +20,7 @@ namespace TowerDefense.States
         [SerializeField] private StateConfig[] stateConfigs;
         [SerializeField] private GameObject mainCanvas;
 
-        private Dictionary<StateId, BaseStateManager> states = new Dictionary<StateId, BaseStateManager>();
-
+        private Dictionary<StateId, BaseStateManager> states = new();
         private BaseStateManager currentState;
 
         #endregion
@@ -48,7 +51,21 @@ namespace TowerDefense.States
 
         private void Start()
         {
+            #if UNITY_EDITOR
+            
+            if (EditorPrefs.HasKey("EnterPlayModeOnLevel"))
+            {
+                var levelPath = EditorPrefs.GetString("EnterPlayModeOnLevel");
+                var levelConfig = AssetDatabase.LoadAssetAtPath<LevelConfig>(levelPath);
+                ChangeState(StateId.Level, levelConfig);
+
+                EditorPrefs.DeleteKey("EnterPlayModeOnLevel");
+                return;
+            }
+            
+            #endif
             ChangeState(StateId.Home);
+            
         }
 
         public void ChangeState(StateId stateId, object stateData = null)

@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using TowerDefense.GameActions;
 using TowerDefense.Hordes;
 using UnityEditor;
 using UnityEngine;
@@ -33,6 +35,7 @@ namespace TowerDefense.Levels.LevelEditor.Editor
         private string levelPath;
         
         private int spawnersCount;
+        private bool isTesting;
 
         private LevelEditorController controller;
         
@@ -47,8 +50,15 @@ namespace TowerDefense.Levels.LevelEditor.Editor
 
         public void CreateGUI()
         {
-            rootVisualElement.Clear();
+            if (isTesting)
+            {
+                EditorApplication.playModeStateChanged += OnEditorPlayModeStateChanged;
+
+                return;
+            }
             
+            rootVisualElement.Clear();
+
             switch (selectedViewType)
             {
                 case ViewType.Main:
@@ -78,6 +88,16 @@ namespace TowerDefense.Levels.LevelEditor.Editor
                     OnLevelEditorGUI();
                     break;
             }
+        }
+        
+        private void OnEditorPlayModeStateChanged(PlayModeStateChange change)
+        {
+            if (isTesting && change == PlayModeStateChange.EnteredEditMode)
+            {
+                isTesting = false;
+                OpenLevelEditor();
+            }
+            
         }
         
         #region MAIN VIEW
@@ -167,7 +187,9 @@ namespace TowerDefense.Levels.LevelEditor.Editor
         private void CreateLevelEditorView()
         {
             spawnersCount = 0;
-
+            
+            EditorApplication.playModeStateChanged += OnEditorPlayModeStateChanged;
+            
             mainElement?.Clear();
 
             var visualTree = 
@@ -193,6 +215,7 @@ namespace TowerDefense.Levels.LevelEditor.Editor
             
             mainElement.Q<Button>("add-spawner-button").clicked += AddSpawnerContainer;
             mainElement.Q<Button>("save-button").clicked += SaveLevel;
+            mainElement.Q<Button>("test-level-button").clicked += TestLevel;
             mainElement.Q<Button>("exit-button").clicked += OnExitLevelEditor;
             
             LoadLevel();
@@ -209,6 +232,15 @@ namespace TowerDefense.Levels.LevelEditor.Editor
             
             selectedViewType = ViewType.Main;
             CreateGUI();
+        }
+
+        private void TestLevel()
+        {
+            var path = AssetDatabase.GetAssetPath(selectedLevelConfig);
+            EditorPrefs.SetString("EnterPlayModeOnLevel", path);
+            controller.ClearAll();
+            isTesting = true;
+            EditorApplication.isPlaying = true;
         }
 
         private void LoadLevel()

@@ -1,4 +1,3 @@
-using System.Buffers;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using TowerDefense.Hordes;
@@ -11,7 +10,6 @@ namespace TowerDefense.Levels.LevelEditor
     /// </summary>
     public class LevelEditorController : MonoBehaviour
     {
-         
         private readonly Dictionary<int, HordeController> spawnerObjects = new();
         private readonly Dictionary<int, Vector3> spawnerPositions = new();
 
@@ -19,6 +17,18 @@ namespace TowerDefense.Levels.LevelEditor
         [SerializeField] private GameObject castlePrefab;
 
         private GameObject castleObject;
+
+        public void ClearAll()
+        {
+            DestroyImmediate(castleObject);
+            foreach (var spawner in spawnerObjects.Values)
+            {
+                DestroyImmediate(spawner.gameObject);
+            }
+            
+            spawnerObjects.Clear();
+            spawnerPositions.Clear();
+        }
 
         public void CreateCastle(Vector2Int position, int health)
         {

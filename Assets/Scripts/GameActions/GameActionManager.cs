@@ -28,7 +28,7 @@ namespace TowerDefense.GameActions
     public static class GameActionManager
     {
         private static HashSet<IActionReceiver> _actionReceivers = new();
-
+        
         public static void RegisterActionReceiver(IActionReceiver actionReceiver)
         {
             if (!_actionReceivers.Contains(actionReceiver))

@@ -8,6 +8,8 @@ namespace TowerDefense.Hordes
     {
         [SerializeField] private BaseSpawnBehaviour[] spawnBehaviours;
 
+        public BaseSpawnBehaviour[] SpawnBehaviourArray => spawnBehaviours;
+
         public int GetEnemyCount()
         {
             var count = 0;
@@ -22,19 +24,5 @@ namespace TowerDefense.Hordes
             return count;
         }
 
-        private Queue<ISpawnBehaviour> spawnBehaviourQueue;
-            
-        public Queue<ISpawnBehaviour> SpawnBehaviourQueue
-        {
-            get
-            {
-                if (spawnBehaviourQueue == null)
-                {
-                    spawnBehaviourQueue = new Queue<ISpawnBehaviour>(spawnBehaviours);
-                }
-
-                return spawnBehaviourQueue;
-            }
-        }
     }
 }

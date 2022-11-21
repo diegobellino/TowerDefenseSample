@@ -39,7 +39,6 @@ namespace TowerDefense.States
         private int defeatedEnemyCount;
 
         private Vector3 castlePosition;
-        private List<Bounds> towerBounds = new();
 
         #endregion
 

@@ -25,8 +25,8 @@ namespace TowerDefense.Hordes
         private ISpawnBehaviour currentBehaviour;
 
         private List<Vector3> path;
-
         private bool active;
+        private int currentSpawnBehaviourIndex;
 
         #endregion
 
@@ -35,8 +35,8 @@ namespace TowerDefense.Hordes
         public void Initialize(HordeConfig config)
         {
             hordeConfig = config;
-            
-            spawnBehaviours = hordeConfig.SpawnBehaviourQueue;
+
+            spawnBehaviours = new Queue<ISpawnBehaviour>(hordeConfig.SpawnBehaviourArray);
             currentBehaviour = spawnBehaviours.Dequeue();
 
             active = true;
