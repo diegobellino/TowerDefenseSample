@@ -288,7 +288,7 @@ MonoBehaviour:
         m_MethodName: StartGame
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 51143d38e47114f80ba5e9b9a541d35d,
+          m_ObjectArgument: {fileID: 11400000, guid: c85686295abf84e7b83ee170e7597ab4,
             type: 2}
           m_ObjectArgumentAssemblyTypeName: TowerDefense.Levels.LevelConfig, TowerDefense.Levels
           m_IntArgument: 0
