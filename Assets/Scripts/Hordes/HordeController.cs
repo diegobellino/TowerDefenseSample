@@ -28,6 +28,9 @@ namespace TowerDefense.Hordes
         private bool active;
         private int currentSpawnBehaviourIndex;
 
+        private float elapsedTime;
+        private bool awaiting;
+
         #endregion
 
         #region LIFETIME
@@ -44,6 +47,19 @@ namespace TowerDefense.Hordes
         
         public void UpdateController(float deltaTime)
         {
+            elapsedTime += deltaTime;
+
+            if (awaiting)
+            {
+                if (elapsedTime >= 2f)
+                {
+                    awaiting = false;
+                    elapsedTime = 0f;
+                }
+                
+                return;
+            }
+            
             if (!active)
             {
                 return;
@@ -60,11 +76,13 @@ namespace TowerDefense.Hordes
                 currentBehaviour = spawnBehaviours.Dequeue();
             }
             
-            currentBehaviour.UpdateBehaviour(deltaTime, this);
+            currentBehaviour.UpdateBehaviour(elapsedTime, this);
 
             if (currentBehaviour.IsDone())
             {
                 currentBehaviour = null;
+                elapsedTime = 0f;
+                awaiting = true;
             }
         }
 
@@ -85,9 +103,13 @@ namespace TowerDefense.Hordes
 
         public void SpawnEnemy(EnemyType type)
         {
-            var enemyObject = Pool.RetrieveObject(type.ToString());
-            enemyObject.transform.position = spawnPoint.transform.position;
-            enemyObject.SetActive(true);
+            var enemyObject = Pool.RetrieveObject(type.ToString()).GetComponent<EnemyController>();
+            enemyObject.gameObject.transform.position = spawnPoint.transform.position;
+            enemyObject.gameObject.SetActive(true);
+            enemyObject.pathWaypoints = path.ToArray();
+            enemyObject.ResetValues();
+            enemyObject.shouldMove = true;
+            
         }
     }
 }

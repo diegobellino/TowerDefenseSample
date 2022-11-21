@@ -8,26 +8,15 @@ namespace TowerDefense.Hordes
     {
         [SerializeField] private EnemyType enemyType;
 
-        private bool didSpawn;
-        private bool isDone;
-
-        private float elapsedTime;
-        
         public override void UpdateBehaviour(float deltaTime, IHordeController hordeController)
         {
-            elapsedTime += deltaTime;
-
-            if (didSpawn)
-            {
-                return;
-            }
-            
             hordeController.SpawnEnemy(enemyType);
+            Debug.Log($"{enemyType} spawned!");
         }
 
         public override bool IsDone()
         {
-            return elapsedTime >= 2f;
+            return true;
         }
     }
 }
