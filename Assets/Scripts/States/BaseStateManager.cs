@@ -38,13 +38,13 @@ namespace TowerDefense.States
             uiController = null;
         }
 
-        public virtual void OnOpenState()
+        public virtual void OnOpenState(object stateData)
         {
             stateController?.RegisterManager(this);
-            stateController?.OnOpenState();
+            stateController?.OnOpenState(stateData);
 
             uiController?.RegisterManager(this);
-            uiController?.OnOpenState();
+            uiController?.OnOpenState(stateData);
         }
 
         public virtual void OnCloseState()

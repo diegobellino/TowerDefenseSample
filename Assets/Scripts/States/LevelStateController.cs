@@ -45,17 +45,14 @@ namespace TowerDefense.States
 
         #region LIFETIME
 
-        public void Init(LevelConfig levelConfig)
+        public override void OnOpenState(object stateData)
         {
-            config = levelConfig;
-        }
-
-        public override void OnOpenState()
-        {
-            base.OnOpenState();
+            base.OnOpenState(stateData);
 
             SmartUpdateController.Instance.Register(this);
-
+            
+            config = stateData as LevelConfig;
+            
             // Position castle and set current health
             SetupCastle();
 
@@ -76,7 +73,6 @@ namespace TowerDefense.States
             {
                 var hordeController = pool.RetrieveObject(nameof(HordeController)).GetComponent<HordeController>();
                 hordeController.Initialize(hordeConfig);
-                hordeController.transform.SetParent(transform);
                 hordeControllers.Add(hordeController);
             }
 
@@ -93,6 +89,7 @@ namespace TowerDefense.States
                 var path = CalculatePath(hordeController.transform.position,
                     castleObject.transform.position);
                 hordeController.UpdatePath(path);
+                hordeController.gameObject.SetActive(true);
             }
         }
 
@@ -179,7 +176,7 @@ namespace TowerDefense.States
                 }
 
                 var tempBounds = spawnedPlaceable.GetBounds();
-                tempBounds.size = tempBounds.size + Vector3.up * 10f;
+                tempBounds.size += Vector3.up * 10f;
 
                 if (bounds.Intersects(tempBounds))
                 {
@@ -220,22 +217,56 @@ namespace TowerDefense.States
             var pathFound = false;
             var isHorizontalSearch = true;
             var curPathPoint = startPosition;
-
-            while (!pathFound)
+            var iterationLimit = 10000;
+            var currentIterations = 0;
+            
+            while (!pathFound && currentIterations < iterationLimit)
             {
-                var objectivePoint = isHorizontalSearch ? 
-                    curPathPoint + Vector3.right * (endPosition.x - curPathPoint.x): 
-                    curPathPoint + Vector3.forward * (endPosition.z - curPathPoint.z);
+                var objectivePoint = Vector3.zero;
+                
+                if (isHorizontalSearch)
+                {
+                    objectivePoint = curPathPoint + Vector3.right * (endPosition.x - curPathPoint.x);
+                }
+                else
+                {
+                    objectivePoint = curPathPoint + Vector3.forward * (endPosition.z - curPathPoint.z);
+                }
 
                 foreach (var placeable in activePlaceables)
                 {
                     var bounds = placeable.GetBounds();
-                    if (bounds.IntersectRay(new Ray(curPathPoint, objectivePoint), out var distance))
+                    // Tweak bounds size so ray can intersect
+                    bounds.size += Vector3.up * 10;
+
+                    var ray = new Ray(curPathPoint, objectivePoint - curPathPoint);
+                    if (bounds.IntersectRay(ray, out var distance))
                     {
-                        distance -= 1;
-                        objectivePoint = isHorizontalSearch ? 
-                            curPathPoint + Vector3.right * distance : 
-                            curPathPoint + Vector3.forward * distance;
+                        distance = Mathf.RoundToInt(distance);
+                        
+                        if (isHorizontalSearch)
+                        {
+                            if (curPathPoint.x > objectivePoint.x)
+                            {
+                                objectivePoint = curPathPoint - Vector3.right * distance;
+                            }
+                            else
+                            {
+                                objectivePoint = curPathPoint + Vector3.right * distance;
+                            }
+                        }
+                        else
+                        {
+                            if (curPathPoint.y > objectivePoint.y)
+                            {
+                                objectivePoint = curPathPoint - Vector3.forward * distance;
+                            }
+                            else
+                            {
+                                objectivePoint = curPathPoint + Vector3.forward * distance;
+                            }
+                        }
+                            
                         break;
                     }
                 }
@@ -245,6 +276,8 @@ namespace TowerDefense.States
 
                 isHorizontalSearch = !isHorizontalSearch;
                 pathFound = curPathPoint == endPosition;
+
+                currentIterations++;
             }
             return path;
         }

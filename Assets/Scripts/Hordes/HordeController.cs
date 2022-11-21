@@ -14,6 +14,8 @@ namespace TowerDefense.Hordes
         
         public IPool Pool { private get; set; }
         public string PoolId => nameof(HordeController);
+        public int HordeCount => hordeConfig.GetEnemyCount();
+
         
         [SerializeField] private Transform spawnPoint;
         [SerializeField] private LineRenderer pathRenderer;
@@ -24,22 +26,37 @@ namespace TowerDefense.Hordes
 
         private List<Vector3> path;
 
-        public int HordeCount => hordeConfig.GetEnemyCount();
+        private bool active;
 
         #endregion
 
         #region LIFETIME
 
-        private void Awake()
+        public void Initialize(HordeConfig config)
         {
+            hordeConfig = config;
+            
             spawnBehaviours = hordeConfig.SpawnBehaviourQueue;
             currentBehaviour = spawnBehaviours.Dequeue();
-        }
 
+            active = true;
+        }
+        
         public void UpdateController(float deltaTime)
         {
+            if (!active)
+            {
+                return;
+            }
+            
             if (currentBehaviour == null)
             {
+                if (spawnBehaviours.Count == 0)
+                {
+                    active = false;
+                    return;
+                }
+                
                 currentBehaviour = spawnBehaviours.Dequeue();
             }
             
@@ -53,11 +70,6 @@ namespace TowerDefense.Hordes
 
         #endregion
 
-        public void Initialize(HordeConfig config)
-        {
-            hordeConfig = config;
-        }
-
         public void UpdatePath(List<Vector3> newPath)
         {
             path = newPath;
@@ -65,7 +77,9 @@ namespace TowerDefense.Hordes
 
             for (int i = 0; i < path.Count; i++)
             {
-                pathRenderer.SetPosition(i, path[i]);
+                var position = path[i];
+                position.y = .1f;
+                pathRenderer.SetPosition(i, position);
             }
         }
 

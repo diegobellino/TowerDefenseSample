@@ -26,7 +26,7 @@ namespace TowerDefense.ObjectPool
 
         #endregion
 
-        private void Start()
+        private void Awake()
         {
             if (initializingPool)
             {
@@ -34,10 +34,10 @@ namespace TowerDefense.ObjectPool
             }
 
             initializingPool = true;
-            StartCoroutine(InstantiateCoroutine());
+            InstantiatePool();
         }
 
-        private IEnumerator InstantiateCoroutine()
+        private void InstantiatePool()
         {
             foreach (var config in poolConfigs)
             {
@@ -48,8 +48,6 @@ namespace TowerDefense.ObjectPool
                     poolable.Pool = this;
 
                     PoolObject(pooledObject, poolable.PoolId);
-
-                    yield return null;
                 }
             }
 

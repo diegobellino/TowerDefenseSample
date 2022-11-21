@@ -51,7 +51,7 @@ namespace TowerDefense.States
             ChangeState(StateId.Home);
         }
 
-        public void ChangeState(StateId stateId)
+        public void ChangeState(StateId stateId, object stateData = null)
         {
             if (!states.ContainsKey(stateId))
             {
@@ -105,7 +105,7 @@ namespace TowerDefense.States
                 newState.RegisterControllers(stateController, uiController);
             }
 
-            newState.OnOpenState();
+            newState.OnOpenState(stateData);
 
             currentState = newState;
         }

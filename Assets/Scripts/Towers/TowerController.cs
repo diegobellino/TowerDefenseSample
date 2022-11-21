@@ -122,7 +122,7 @@ namespace TowerDefense.Towers
         {
             var bounds = GetBounds();
 
-            return new Vector3[]
+            return new[]
             {
                 bounds.center,
                 new Vector3(bounds.min.x, bounds.center.y, bounds.min.z),

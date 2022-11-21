@@ -12,3 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da65f79ff4a2844519da6df72a00c1de, type: 3}
   m_Name: MyLevel
   m_EditorClassIdentifier: 
+  castlePosition: {x: 0, y: 0}
+  castleHealth: 100
+  hordeSpawnerLocations:
+  - {x: -10, y: -7}
+  - {x: 10, y: 7}
+  hordeConfigs:
+  - {fileID: 11400000, guid: e7baced16d7d04d9f927a26ca1593b5c, type: 2}
+  - {fileID: 11400000, guid: e7baced16d7d04d9f927a26ca1593b5c, type: 2}

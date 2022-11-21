@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pool: {fileID: 8369937243734086695}
-  castleObject: {fileID: 0}
+  castleObject: {fileID: 4394019145313815158}
 --- !u!1 &6851564786482046026
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,7 +226,7 @@ MonoBehaviour:
     InitialSize: 10
   - Poolable: {fileID: 4240646642684892089, guid: 743e7696aa4ba492bba2adacca24ac8e,
       type: 3}
-    InitialSize: 3
+    InitialSize: 5
 --- !u!1001 &6871137240505431475
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -299,6 +299,12 @@ PrefabInstance:
 --- !u!4 &4394019145313815157 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7179194977446707142, guid: 89b2aea9c82b0497ab79ccaec55cebd9,
+    type: 3}
+  m_PrefabInstance: {fileID: 6871137240505431475}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4394019145313815158 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7179194977446707141, guid: 89b2aea9c82b0497ab79ccaec55cebd9,
     type: 3}
   m_PrefabInstance: {fileID: 6871137240505431475}
   m_PrefabAsset: {fileID: 0}

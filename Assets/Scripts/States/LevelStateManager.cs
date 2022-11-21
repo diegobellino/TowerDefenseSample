@@ -1,11 +1,9 @@
 ﻿using Utils.Interfaces;
 using TowerDefense.GameActions;
-using UnityEngine;
+using TowerDefense.Levels;
 
 namespace TowerDefense.States
 {
-    
-
     public class LevelStateManager : BaseStateManager
     {
         #region VARIABLES
@@ -15,6 +13,7 @@ namespace TowerDefense.States
 
         private int levelCurrency = 100;
         private IPlaceable selectedTower;
+        private LevelConfig levelConfig;
 
         #endregion
 
