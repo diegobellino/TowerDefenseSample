@@ -20,6 +20,8 @@ namespace TowerDefense.GameActions
         public float FloatData;
         public string StringData;
         public bool BoolData;
+        public Vector2 Vector2Data;
+        public Vector3 Vector3Data;
         public object ExtraData;
     }
 

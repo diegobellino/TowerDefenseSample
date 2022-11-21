@@ -1,27 +1,29 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using TowerDefense.Enemies;
+using Utils.Interfaces;
 
 namespace TowerDefense.Hordes
 {
     /// <summary>
     /// Spawns linked hordes when their respective conditions are met and updates them
     /// </summary>
-    public class HordeController : MonoBehaviour, IHordeController
+    public class HordeController : MonoBehaviour, IHordeController, IPoolable
     {
         #region VARIABLES
+        
+        public IPool Pool { private get; set; }
+        public string PoolId => nameof(HordeController);
         
         [SerializeField] private Transform spawnPoint;
         [SerializeField] private LineRenderer pathRenderer;
 
         private HordeConfig hordeConfig;
-        private TowerDefense.ObjectPool.ObjectPool pool;
         private Queue<ISpawnBehaviour> spawnBehaviours;
         private ISpawnBehaviour currentBehaviour;
-        private Dictionary<HordeConfig, List<IEnemy>> enemiesByHorde = new();
-        private float timeSinceLastSpawned;
-        
+
+        private List<Vector3> path;
+
         public int HordeCount => hordeConfig.GetEnemyCount();
 
         #endregion
@@ -56,18 +58,20 @@ namespace TowerDefense.Hordes
             hordeConfig = config;
         }
 
-        public void UpdatePath(Vector3 startPosition, Vector3 endPosition)
+        public void UpdatePath(List<Vector3> newPath)
         {
-            pathRenderer.positionCount = 3;
-            
-            pathRenderer.SetPosition(0, startPosition);
-            pathRenderer.SetPosition(1, new Vector3(endPosition.x, startPosition.y, startPosition.z));
-            pathRenderer.SetPosition(2, endPosition);
+            path = newPath;
+            pathRenderer.positionCount = path.Count;
+
+            for (int i = 0; i < path.Count; i++)
+            {
+                pathRenderer.SetPosition(i, path[i]);
+            }
         }
 
         public void SpawnEnemy(EnemyType type)
         {
-            var enemyObject = pool.RetrieveObject(type.ToString());
+            var enemyObject = Pool.RetrieveObject(type.ToString());
             enemyObject.transform.position = spawnPoint.transform.position;
             enemyObject.SetActive(true);
         }

@@ -36,7 +36,7 @@ namespace TowerDefense.Enemies
         public bool shouldMove { private get; set; }
 
         public IPool Pool { private get; set; }
-        public string PoolId { get => enemyConfig.Type.ToString(); }
+        public string PoolId => enemyConfig.Type.ToString();
 
         private float damageTaken;
         private bool isSlowed;

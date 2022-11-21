@@ -8,7 +8,7 @@ namespace TowerDefense.Hordes
     public interface IHordeController
     {
         void Initialize(HordeConfig config);
-        void UpdatePath(Vector3 startPosition, Vector3 endPosition);
+        void UpdatePath(List<Vector3> newPath);
         void SpawnEnemy(EnemyType type);
     }
 }

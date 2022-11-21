@@ -76,7 +76,7 @@ namespace TowerDefense.Towers
                 config.GetAttackRate(currentLevel));
         }
 
-        public void TriggerState(TowerState state)
+        private void TriggerState(TowerState state)
         {
             currentState = state;
             hud.AdjustIndicatorsToState(state);
@@ -107,10 +107,13 @@ namespace TowerDefense.Towers
 
         public Bounds GetBounds()
         {
-            var bounds = new Bounds();
-
-            bounds.center = transform.position;
-            bounds.size = new Vector3(config.Size.x - Consts.TOWER_BOUNDARY_OFFSET, 0f, config.Size.y - Consts.TOWER_BOUNDARY_OFFSET);
+            var bounds = new Bounds
+            {
+                center = transform.position,
+                size = new Vector3(config.Size.x - Consts.TOWER_BOUNDARY_OFFSET, 
+                    0f, 
+                    config.Size.y - Consts.TOWER_BOUNDARY_OFFSET)
+            };
 
             return bounds;
         }

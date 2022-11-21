@@ -36,7 +36,8 @@ namespace TowerDefense.Levels.LevelEditor
             
             foreach (var spawnerId in spawnerObjects.Keys)
             {
-                spawnerObjects[spawnerId].UpdatePath(spawnerPositions[spawnerId], newPosition);
+                var path = GetPath(spawnerPositions[spawnerId], newPosition);
+                spawnerObjects[spawnerId].UpdatePath(path);
             }
         }
 
@@ -54,7 +55,8 @@ namespace TowerDefense.Levels.LevelEditor
 
             foreach (var spawnerId in spawnerObjects.Keys)
             {
-                spawnerObjects[spawnerId].UpdatePath(spawnerPositions[spawnerId], newPosition);
+                var path = GetPath(spawnerPositions[spawnerId], newPosition);
+                spawnerObjects[spawnerId].UpdatePath(path);
             }
         }
 
@@ -67,7 +69,8 @@ namespace TowerDefense.Levels.LevelEditor
             spawnerObjects[spawnerId] = Instantiate(spawnerPrefab, transform).GetComponent<HordeController>();
             spawnerObjects[spawnerId].transform.position = newPosition;
 
-            spawnerObjects[spawnerId].UpdatePath(newPosition, castleObject.transform.position);
+            var path = GetPath(newPosition, castleObject.transform.position);
+            spawnerObjects[spawnerId].UpdatePath(path);
 
             if (config != null)
             {
@@ -93,13 +96,37 @@ namespace TowerDefense.Levels.LevelEditor
             spawnerPositions[spawnerId] = newPosition;
 
             spawnerObjects[spawnerId].transform.position = newPosition;
-            spawnerObjects[spawnerId].UpdatePath(newPosition, castleObject.transform.position);
+            var path = GetPath(newPosition, castleObject.transform.position);
+            spawnerObjects[spawnerId].UpdatePath(path);
         }
 
         public void ChangeSpawnerConfig(int spawnerId, HordeConfig config)
         {
             Debug.Log($"Change spawner {spawnerId} config to {config.name}");
             spawnerObjects[spawnerId].Initialize(config);
+        }
+
+        private List<Vector3> GetPath(Vector3 startPosition, Vector3 endPosition)
+        {
+            var path = new List<Vector3>();
+            path.Add(startPosition);
+            var pathFound = false;
+            var isHorizontalSearch = true;
+            var curPathPoint = startPosition;
+
+            while (!pathFound)
+            {
+                var objectivePoint = isHorizontalSearch ? 
+                    curPathPoint + Vector3.right * (endPosition.x - curPathPoint.x): 
+                    curPathPoint + Vector3.forward * (endPosition.z - curPathPoint.z);
+
+                curPathPoint = objectivePoint;
+                path.Add(curPathPoint);
+
+                isHorizontalSearch = !isHorizontalSearch;
+                pathFound = curPathPoint == endPosition;
+            }
+            return path;
         }
     }
 }

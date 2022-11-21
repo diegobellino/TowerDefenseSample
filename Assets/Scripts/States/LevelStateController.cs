@@ -4,6 +4,7 @@ using Utils.Interfaces;
 using System.Collections.Generic;
 using TowerDefense.Hordes;
 using TowerDefense.Levels;
+using UnityEditor.UIElements;
 
 namespace TowerDefense.States
 {
@@ -21,23 +22,33 @@ namespace TowerDefense.States
     {
         #region VARIABLES
 
-        [SerializeField] private LevelConfig config;
-        [SerializeField] private HordeController[] hordes;
         [SerializeField] private TowerDefense.ObjectPool.ObjectPool pool;
+        [SerializeField] private GameObject castleObject;
 
         public UpdateGroup Group => UpdateGroup.Timed;
         public float CurrentHealth => currentHealth;
         public float MaxHealth => config.castleHealth;
+        
+        private LevelConfig config;
         private LevelStateManager manager => stateManager as LevelStateManager;
 
-        private HashSet<IPlaceable> activePlaceables = new HashSet<IPlaceable>();
+        private List<HordeController> hordeControllers = new();
+        private HashSet<IPlaceable> activePlaceables = new();
         private float currentHealth;
         private int totalEnemycount;
         private int defeatedEnemyCount;
 
+        private Vector3 castlePosition;
+        private List<Bounds> towerBounds = new();
+
         #endregion
 
         #region LIFETIME
+
+        public void Init(LevelConfig levelConfig)
+        {
+            config = levelConfig;
+        }
 
         public override void OnOpenState()
         {
@@ -45,12 +56,44 @@ namespace TowerDefense.States
 
             SmartUpdateController.Instance.Register(this);
 
-            foreach(var hordeController in hordes)
+            // Position castle and set current health
+            SetupCastle();
+
+            // Prepare every horde controller and cache them
+            SetupHordeControllers();
+        }
+
+        private void SetupCastle()
+        {
+            castlePosition = new Vector3(config.castlePosition.x, 0, config.castlePosition.y);
+            castleObject.transform.position = castlePosition;
+            currentHealth = config.castleHealth;
+        }
+
+        private void SetupHordeControllers()
+        {
+            foreach (var hordeConfig in config.hordeConfigs)
             {
-                totalEnemycount += hordeController.HordeCount;
+                var hordeController = pool.RetrieveObject(nameof(HordeController)).GetComponent<HordeController>();
+                hordeController.Initialize(hordeConfig);
+                hordeController.transform.SetParent(transform);
+                hordeControllers.Add(hordeController);
             }
 
-            currentHealth = config.castleHealth;
+            for (int i = 0; i < config.hordeSpawnerLocations.Length; i++)
+            {
+                var hordePosition = config.hordeSpawnerLocations[i];
+                var newPosition = new Vector3(hordePosition.x, 0, hordePosition.y);
+                hordeControllers[i].transform.position = newPosition;
+            }
+
+            foreach(var hordeController in hordeControllers)
+            {
+                totalEnemycount += hordeController.HordeCount;
+                var path = CalculatePath(hordeController.transform.position,
+                    castleObject.transform.position);
+                hordeController.UpdatePath(path);
+            }
         }
 
         public void SmartUpdate(float deltaTime)
@@ -63,7 +106,7 @@ namespace TowerDefense.States
                 return;
             }
 
-            foreach (var hordeController in hordes)
+            foreach (var hordeController in hordeControllers)
             {
                 hordeController.UpdateController(deltaTime);
             }
@@ -73,7 +116,6 @@ namespace TowerDefense.States
 
         private bool HasWon()
         {
-            return false;
             return totalEnemycount <= defeatedEnemyCount;
         }
 
@@ -85,23 +127,7 @@ namespace TowerDefense.States
         }
 
         #endregion
-
-        public void TakeDamage(float amount)
-        {
-            currentHealth -= amount;
-
-            if (currentHealth <= 0)
-            {
-                GameStateController.Instance.ChangeState(StateId.GameOver);
-                return;
-            }
-        }
-
-        public void OnEnemyDefeated()
-        {
-            defeatedEnemyCount++;
-        }
-
+        
         #region PLACEABLE MANAGEMENT
 
         public void SpawnTower(TowerType type)
@@ -131,12 +157,19 @@ namespace TowerDefense.States
             {
                 activePlaceable.InPlacing = false;
             }
+
+            foreach (var hordeController in hordeControllers)
+            {
+                var path = CalculatePath(hordeController.transform.position,
+                    castleObject.transform.position);
+                hordeController.UpdatePath(path);
+            }
         }
 
         public bool IsPlacementValid(IPlaceable placeable)
         {
             var bounds = placeable.GetBounds();
-            bounds.size = bounds.size + Vector3.up * 10f;
+            bounds.size += Vector3.up * 10f;
 
             foreach (var spawnedPlaceable in activePlaceables)
             {
@@ -163,5 +196,57 @@ namespace TowerDefense.States
         }
 
         #endregion
+
+        public void TakeDamage(float amount)
+        {
+            currentHealth -= amount;
+
+            if (currentHealth <= 0)
+            {
+                GameStateController.Instance.ChangeState(StateId.GameOver);
+                return;
+            }
+        }
+
+        public void OnEnemyDefeated()
+        {
+            defeatedEnemyCount++;
+        }
+
+        private List<Vector3> CalculatePath(Vector3 startPosition, Vector3 endPosition)
+        {
+            var path = new List<Vector3>();
+            path.Add(startPosition);
+            var pathFound = false;
+            var isHorizontalSearch = true;
+            var curPathPoint = startPosition;
+
+            while (!pathFound)
+            {
+                var objectivePoint = isHorizontalSearch ? 
+                    curPathPoint + Vector3.right * (endPosition.x - curPathPoint.x): 
+                    curPathPoint + Vector3.forward * (endPosition.z - curPathPoint.z);
+
+                foreach (var placeable in activePlaceables)
+                {
+                    var bounds = placeable.GetBounds();
+                    if (bounds.IntersectRay(new Ray(curPathPoint, objectivePoint), out var distance))
+                    {
+                        distance -= 1;
+                        objectivePoint = isHorizontalSearch ? 
+                            curPathPoint + Vector3.right * distance : 
+                            curPathPoint + Vector3.forward * distance;
+                        break;
+                    }
+                }
+
+                curPathPoint = objectivePoint;
+                path.Add(curPathPoint);
+
+                isHorizontalSearch = !isHorizontalSearch;
+                pathFound = curPathPoint == endPosition;
+            }
+            return path;
+        }
     }
 }
