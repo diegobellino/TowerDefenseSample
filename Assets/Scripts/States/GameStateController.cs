@@ -1,30 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using TowerDefense.GameActions;
+using TowerDefense.Levels;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace TowerDefense.States
 {
-    public enum GameAction
-    {
-        Gameplay_SpawnTower,
-        Gameplay_Select,
-        Gameplay_Unselect,
-        Gameplay_LevelUpTower,
-        Gameplay_TakeDamage
-    }
-
-    public struct BatonPassData
-    {
-        public int IntData;
-        public float FloatData;
-        public string StringData;
-        public bool BoolData;
-        public object ExtraData;
-    }
-
     /// <summary>
-    /// Lives trhoughout all lifetime of the app. Controls Game States
+    /// Lives throughout all lifetime of the app. Controls Game States
     /// </summary>
-    public class GameStateController : MonoBehaviour
+    public class GameStateController : MonoBehaviour, IActionReceiver
     {
         #region VARIABLES
 
@@ -33,8 +20,7 @@ namespace TowerDefense.States
         [SerializeField] private StateConfig[] stateConfigs;
         [SerializeField] private GameObject mainCanvas;
 
-        private Dictionary<StateId, BaseStateManager> states = new Dictionary<StateId, BaseStateManager>();
-
+        private Dictionary<StateId, BaseStateManager> states = new();
         private BaseStateManager currentState;
 
         #endregion
@@ -50,6 +36,8 @@ namespace TowerDefense.States
             Instance = this;
             DontDestroyOnLoad(this);
 
+            GameActionManager.RegisterActionReceiver(this);
+
             CreateStates();
         }
 
@@ -63,10 +51,24 @@ namespace TowerDefense.States
 
         private void Start()
         {
+            #if UNITY_EDITOR
+            
+            if (EditorPrefs.HasKey("EnterPlayModeOnLevel"))
+            {
+                var levelPath = EditorPrefs.GetString("EnterPlayModeOnLevel");
+                var levelConfig = AssetDatabase.LoadAssetAtPath<LevelConfig>(levelPath);
+                ChangeState(StateId.Level, levelConfig);
+
+                EditorPrefs.DeleteKey("EnterPlayModeOnLevel");
+                return;
+            }
+            
+            #endif
             ChangeState(StateId.Home);
+            
         }
 
-        public void ChangeState(StateId stateId)
+        public void ChangeState(StateId stateId, object stateData = null)
         {
             if (!states.ContainsKey(stateId))
             {
@@ -120,17 +122,17 @@ namespace TowerDefense.States
                 newState.RegisterControllers(stateController, uiController);
             }
 
-            newState.OnOpenState();
+            newState.OnOpenState(stateData);
 
             currentState = newState;
         }
 
-        public void FireAction(GameAction action)
+        public void OnAction(GameAction action)
         {
             currentState?.OnAction(action);
         }
 
-        public void FireAction(GameAction action, BatonPassData data)
+        public void OnAction(GameAction action, BatonPassData data)
         {
             currentState?.OnAction(action, data);
         }

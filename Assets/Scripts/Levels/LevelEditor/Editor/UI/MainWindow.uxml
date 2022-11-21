@@ -1,0 +1,25 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scripts/Levels/LevelEditor/Editor/UI/Main.uss?fileID=7433441132597879392&amp;guid=757000465009a4d0b898cf76e781bb57&amp;type=3#Main" />
+    <ui:VisualElement name="main-view">
+        <ui:VisualElement name="main-panel" class="panel">
+            <ui:Label text="Select Config Type" display-tooltip-when-elided="true" class="panel-title" />
+            <ui:VisualElement name="container" class="container">
+                <ui:RadioButtonGroup value="-1" name="config-button-group" class="button-group">
+                    <ui:RadioButton label="New Level" value="true" name="new-level-button" />
+                    <ui:VisualElement name="divider" class="divider" />
+                    <ui:RadioButton label="Load Level" name="load-level-button" />
+                </ui:RadioButtonGroup>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="new-level-panel" class="panel">
+            <ui:Label text="New Level Config" display-tooltip-when-elided="true" class="panel-title" />
+            <ui:TextField picking-mode="Ignore" label="Name" value="filler text" name="level-name-field" style="padding-bottom: 10px;" />
+            <ui:Button text="Generate level" display-tooltip-when-elided="true" name="create-level-button" />
+        </ui:VisualElement>
+        <ui:VisualElement name="load-level-panel" class="panel hide">
+            <ui:Label text="Load Level Config" display-tooltip-when-elided="true" style="-unity-font-style: bold; font-size: 14px; margin-bottom: 15px;" />
+            <ui:VisualElement name="load-level-asset-field" style="margin-bottom: 10px;" />
+            <ui:Button text="Load level" display-tooltip-when-elided="true" name="load-level-button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

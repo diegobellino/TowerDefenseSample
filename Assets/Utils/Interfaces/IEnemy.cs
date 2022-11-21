@@ -3,7 +3,6 @@ using Utils.Interfaces;
 
 namespace TowerDefense.Enemies
 {
-
     [System.Serializable]
     public enum EnemyType
     {
@@ -15,9 +14,7 @@ namespace TowerDefense.Enemies
     public interface IEnemy : IDamageable, IPoolable
     {
         EnemyType Type { get; }
-
-        Vector3[] pathWaypoints { set; }
-
+        
         bool shouldMove { set; }
 
         bool IsTargeteable();

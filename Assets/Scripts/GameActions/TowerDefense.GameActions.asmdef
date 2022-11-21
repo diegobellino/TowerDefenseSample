@@ -1,0 +1,14 @@
+{
+    "name": "TowerDefense.GameActions",
+    "rootNamespace": "TowerDefense.GameActions",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

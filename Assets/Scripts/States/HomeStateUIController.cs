@@ -1,10 +1,12 @@
-﻿namespace TowerDefense.States
+﻿using TowerDefense.Levels;
+
+namespace TowerDefense.States
 {
     public class HomeStateUIController : BaseStateController
     {
-        public void StartGame()
+        public void StartGame(LevelConfig levelConfig)
         {
-            GameStateController.Instance.ChangeState(StateId.Level);
+            GameStateController.Instance.ChangeState(StateId.Level, levelConfig);
         }
     }
 }

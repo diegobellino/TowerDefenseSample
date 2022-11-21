@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using TowerDefense.Enemies;
-using Utils.Interfaces;
 
 namespace TowerDefense.Constants
 {

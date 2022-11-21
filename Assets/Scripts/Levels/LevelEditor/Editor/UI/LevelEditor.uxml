@@ -1,0 +1,24 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scripts/Levels/LevelEditor/Editor/UI/Main.uss?fileID=7433441132597879392&amp;guid=757000465009a4d0b898cf76e781bb57&amp;type=3#Main" />
+    <Style src="project://database/Assets/Scripts/Levels/LevelEditor/Editor/UI/LevelEditor.uss?fileID=7433441132597879392&amp;guid=e23cef45d5632464586fa9ef5e2ec34b&amp;type=3#LevelEditor" />
+    <ui:VisualElement name="main" class="panel">
+        <ui:VisualElement name="toolbar" style="height: 30px; flex-direction: row-reverse; padding-bottom: 0; margin-bottom: 20px;">
+            <ui:Button text="X" display-tooltip-when-elided="true" name="exit-button" style="position: relative; width: 30px; height: 30px;" />
+            <ui:Button text="Save" display-tooltip-when-elided="true" name="save-button" style="height: 30px;" />
+            <ui:Label text="[Level name] Editor" display-tooltip-when-elided="true" name="level-editor-title" style="flex-grow: 1; font-size: 14px; -unity-font-style: bold; -unity-text-align: middle-left; white-space: normal;" />
+        </ui:VisualElement>
+        <ui:Button text="Test" display-tooltip-when-elided="true" name="test-level-button" style="margin-top: 0; margin-bottom: 15px; background-color: rgb(60, 137, 97); height: 30px;" />
+        <ui:ScrollView horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Auto">
+            <ui:VisualElement name="castle-config" class="container">
+                <ui:Label text="Castle Configuration" display-tooltip-when-elided="true" class="container-title" />
+                <ui:VisualElement name="castle-health-field" style="margin-bottom: 5px;" />
+                <ui:VisualElement name="castle-position-field" />
+            </ui:VisualElement>
+            <ui:VisualElement name="horde-spawners-config" class="container">
+                <ui:Label text="Horde Spawners" display-tooltip-when-elided="true" class="container-title" style="margin-bottom: 10px;" />
+                <ui:VisualElement name="horde-spawners" />
+                <ui:Button text="Add Horde Spawner" display-tooltip-when-elided="true" name="add-spawner-button" />
+            </ui:VisualElement>
+        </ui:ScrollView>
+    </ui:VisualElement>
+</ui:UXML>

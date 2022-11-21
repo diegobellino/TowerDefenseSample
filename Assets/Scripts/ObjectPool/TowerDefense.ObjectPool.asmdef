@@ -1,0 +1,16 @@
+{
+    "name": "TowerDefense.ObjectPool",
+    "rootNamespace": "",
+    "references": [
+        "GUID:1f6173867584f824ebabb5b02b42f6f9"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

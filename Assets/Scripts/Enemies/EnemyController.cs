@@ -2,7 +2,7 @@
 using Utils.SmartUpdate;
 using TowerDefense.Enemies.Config;
 using Utils.Interfaces;
-using TowerDefense.States;
+using TowerDefense.GameActions;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -36,7 +36,7 @@ namespace TowerDefense.Enemies
         public bool shouldMove { private get; set; }
 
         public IPool Pool { private get; set; }
-        public string PoolId { get => enemyConfig.Type.ToString(); }
+        public string PoolId => enemyConfig.Type.ToString();
 
         private float damageTaken;
         private bool isSlowed;
@@ -111,12 +111,14 @@ namespace TowerDefense.Enemies
 
                 if (curWaypoint >= pathWaypoints.Length)
                 {
-                    GameStateController.Instance.FireAction(
+                    GameActionManager.FireAction(
                         GameAction.Gameplay_TakeDamage,
                         new BatonPassData
                         {
                             FloatData = enemyConfig.Damage
                         });
+                    GameActionManager.FireAction(GameAction.Gameplay_EnemyDefeated);
+                    
                     shouldMove = false;
 
                     Pool.PoolObject(gameObject, PoolId);
@@ -129,7 +131,7 @@ namespace TowerDefense.Enemies
                 transform.LookAt(targetPosition);
             }
 
-            var newPosition = transform.position + movementVector * currentSpeed * deltaTime;
+            var newPosition = transform.position + movementVector * (currentSpeed * deltaTime);
             transform.position = newPosition;
         }
 
@@ -148,6 +150,7 @@ namespace TowerDefense.Enemies
 
             if (Health <= 0)
             {
+                GameActionManager.FireAction(GameAction.Gameplay_EnemyDefeated);
                 Pool.PoolObject(gameObject, PoolId);
                 return;
             }

@@ -10,7 +10,7 @@ namespace TowerDefense.States
 
         #endregion
 
-        public virtual void OnOpenState()
+        public virtual void OnOpenState(object stateData)
         {
 
         }

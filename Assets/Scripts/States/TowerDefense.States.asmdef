@@ -1,9 +1,13 @@
 {
     "name": "TowerDefense.States",
+    "rootNamespace": "",
     "references": [
         "GUID:1f6173867584f824ebabb5b02b42f6f9",
         "GUID:5966a23a3aaa2234ab7c621690738ccb",
-        "GUID:cf4ac602c3b936544bc318b8defbccc7"
+        "GUID:5e7d727614452432d8d4410025f643dd",
+        "GUID:3aa7223444a0047da967ee4f9a9c77f4",
+        "GUID:de22519c7647247ba906fde09602de2d",
+        "GUID:5542af74c9bd24686a802d260b643161"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

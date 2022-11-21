@@ -1,9 +1,9 @@
 ﻿using Utils.Interfaces;
+using TowerDefense.GameActions;
+using TowerDefense.Levels;
 
 namespace TowerDefense.States
 {
-    
-
     public class LevelStateManager : BaseStateManager
     {
         #region VARIABLES
@@ -13,21 +13,16 @@ namespace TowerDefense.States
 
         private int levelCurrency = 100;
         private IPlaceable selectedTower;
+        private LevelConfig levelConfig;
 
         #endregion
 
         #region BASE STATE
 
-        public LevelStateManager(): base()
-        {
-
-        }
-
         public override void OnAction(GameAction action)
         {
             switch (action)
             {
-                
                 case GameAction.Gameplay_LevelUpTower:
                     if (selectedTower != null)
                     {
@@ -38,6 +33,9 @@ namespace TowerDefense.States
                 case GameAction.Gameplay_Unselect:
                     selectedTower = null;
                     levelUIController.ShowSpawnerUI();
+                    break;
+                case GameAction.Gameplay_EnemyDefeated:
+                    levelStateController.OnEnemyDefeated();
                     break;
             }
         }
@@ -63,10 +61,10 @@ namespace TowerDefense.States
 
         #endregion
 
-        public void SyncUIValues(int hordesDefeated, int totalHordeCount)
+        public void SyncUIValues(int hordesDefeated, int totalCount)
         {
             var healthPercentage = levelStateController.CurrentHealth / levelStateController.MaxHealth;
-            levelUIController.UpdateUI(healthPercentage, hordesDefeated, totalHordeCount);
+            levelUIController.UpdateUI(healthPercentage, hordesDefeated, totalCount);
         }
 
         public bool TakeCurrency(int amount)
