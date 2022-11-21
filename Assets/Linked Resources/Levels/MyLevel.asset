@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MyLevel
   m_EditorClassIdentifier: 
   castlePosition: {x: 0, y: 0}
-  castleHealth: 100
+  castleHealth: 110
   hordeSpawnerLocations:
   - {x: -10, y: -7}
   - {x: 10, y: 7}

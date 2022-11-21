@@ -260,6 +260,9 @@ namespace TowerDefense.Levels.LevelEditor.Editor
             selectedLevelConfig.hordeConfigs = hordeConfigs.ToArray();
             selectedLevelConfig.hordeSpawnerLocations = hordeSpawnerLocations.ToArray();
             
+            EditorUtility.SetDirty(selectedLevelConfig);
+            AssetDatabase.SaveAssets();
+            
             Debug.Log($"Level {selectedLevelConfig.name} saved!");
         }
 
